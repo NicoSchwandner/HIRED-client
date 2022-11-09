@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectIssueById } from "./issuesApiSlice";
 
-import ISSUE_STATUS_LIST from "../../config/issue_status_list";
+import { ISSUE_STATUS_NR2STR } from "../../config/issue_status";
+
+import { ISSUE_TYPE_NR2STR } from "../../config/issue_type";
 
 const Issue = ({ issueId }) => {
   const issue = useSelector((state) => selectIssueById(state, issueId));
@@ -30,8 +32,8 @@ const Issue = ({ issueId }) => {
         <td className={"table__cell issue__status"}>
           {" "}
           <span className="issue__status">
-            {ISSUE_STATUS_LIST[issue.status]
-              ? ISSUE_STATUS_LIST[issue.status]
+            {ISSUE_STATUS_NR2STR[issue.status]
+              ? ISSUE_STATUS_NR2STR[issue.status]
               : issue.status}
           </span>
         </td>
@@ -41,7 +43,9 @@ const Issue = ({ issueId }) => {
           {issue.title ? issue.title : ""}
         </td>
         <td className={"table__cell issue__type"}>
-          {issue.type ? issue.type : ""}
+          {ISSUE_TYPE_NR2STR[issue.type]
+            ? ISSUE_TYPE_NR2STR[issue.type]
+            : issue.type}
         </td>
         <td className={"table__cell issue__username"}>
           {issue.assignedTo ? issue.assignedTo : ""}

@@ -12,7 +12,6 @@ export const issuesApiSlice = apiSlice.injectEndpoints({
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      keepUnusedDataFor: 5, //[s], default 60s
       transformResponse: (responseData) => {
         const loadedIssues = responseData.map((issue) => {
           issue.id = issue._id;
@@ -24,15 +23,48 @@ export const issuesApiSlice = apiSlice.injectEndpoints({
         if (result?.ids) {
           return [
             { tpe: "Issue", id: "LIST" },
-            ...result.ids.map((id) => ({ type: "issue", id })),
+            ...result.ids.map((id) => ({ type: "Issue", id })),
           ];
         } else return [{ type: "Issue", id: "LIST" }];
       },
     }),
+    addNewIssue: builder.mutation({
+      query: (initialIssueData) => ({
+        url: "/issues",
+        method: "POST",
+        body: {
+          ...initialIssueData,
+        },
+      }),
+      invalidatesTags: [{ type: "Issue", id: "LIST" }],
+    }),
+    UpdateIssue: builder.mutation({
+      query: (initialIssueData) => ({
+        url: "/issues",
+        method: "PATCH",
+        body: {
+          ...initialIssueData,
+        },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Issue", id: arg.id }],
+    }),
+    deleteIssue: builder.mutation({
+      query: ({ id }) => ({
+        url: "/issues",
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Issue", id: arg.id }],
+    }),
   }),
 });
 
-export const { useGetIssuesQuery } = issuesApiSlice;
+export const {
+  useGetIssuesQuery,
+  useAddNewIssueMutation,
+  useUpdateIssueMutation,
+  useDeleteIssueMutation,
+} = issuesApiSlice;
 
 //returns the query result object
 export const selectIssuesResult = issuesApiSlice.endpoints.getIssues.select();

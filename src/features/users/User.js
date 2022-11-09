@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUserById } from "./usersApiSlice";
 
-import ROLES_LIST from "../../config/roles_list";
+import { ROLES_NR2STR } from "../../config/roles";
 
 const User = ({ userId }) => {
   const user = useSelector((state) => selectUserById(state, userId));
@@ -19,7 +19,7 @@ const User = ({ userId }) => {
 
     const userRolesString = user.roles
       .map((role) => {
-        return ROLES_LIST[role] ? ROLES_LIST[role] : role;
+        return ROLES_NR2STR[role] ? ROLES_NR2STR[role] : role;
       })
       .toString()
       .replaceAll(",", ", ");
