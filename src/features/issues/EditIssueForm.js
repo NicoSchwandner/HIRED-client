@@ -168,7 +168,7 @@ const EditIssueForm = ({ users, issue }) => {
           Description:
         </label>
         <input
-          className={"form__input"}
+          className={"form__input form__input--text"}
           id="description"
           name="description"
           type="text"
