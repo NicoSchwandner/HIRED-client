@@ -5,7 +5,14 @@ import NewIssueForm from "./NewIssueForm";
 const NewIssue = () => {
   const users = useSelector(selectAllUsers);
 
-  const content = users ? <NewIssueForm users={users} /> : <p>Loading...</p>;
+  if (!users?.length)
+    return (
+      <p>
+        Currently not available - Did not receive user data or no users exist
+      </p>
+    );
+
+  const content = <NewIssueForm users={users} />;
 
   return content;
 };
