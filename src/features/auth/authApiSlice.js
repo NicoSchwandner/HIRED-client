@@ -1,5 +1,5 @@
-import { apiSlice } from "../../app/api/apiSlice";
-import { logout } from "./authSlice";
+import { apiSlice } from "../../app/api/apiSlice"
+import { logout } from "./authSlice"
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,13 +17,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
-          const { queryResponse } = await queryFulfilled;
-          console.log(queryResponse);
-          dispatch(logout());
+          const { queryResponse } = await queryFulfilled
+          console.log(queryResponse)
+          dispatch(logout())
           // clears out the cache and the subscriptions
-          dispatch(apiSlice.util.resetApiState());
+          dispatch(apiSlice.util.resetApiState())
         } catch (err) {
-          console.log(err);
+          console.log(err)
         }
       },
     }),
@@ -34,7 +34,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
     }),
   }),
-});
+})
 
 export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation } =
-  authApiSlice;
+  authApiSlice

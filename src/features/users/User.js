@@ -1,30 +1,30 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
+import { useNavigate } from "react-router-dom"
 
-import { useSelector } from "react-redux";
-import { selectUserById } from "./usersApiSlice";
+import { useSelector } from "react-redux"
+import { selectUserById } from "./usersApiSlice"
 
-import { ROLES_NR2STR } from "../../config/roles";
+import { ROLES_NR2STR } from "../../config/roles"
 
 const User = ({ userId }) => {
-  const user = useSelector((state) => selectUserById(state, userId));
+  const user = useSelector((state) => selectUserById(state, userId))
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   if (user) {
-    const handleEdit = () => navigate(`/dash/users/${userId}`);
+    const handleEdit = () => navigate(`/dash/users/${userId}`)
 
     // const userRolesString = user.roles.toString().replaceAll(",", ", ");
 
     const userRolesString = user.roles
       .map((role) => {
-        return ROLES_NR2STR[role] ? ROLES_NR2STR[role] : role;
+        return ROLES_NR2STR[role] ? ROLES_NR2STR[role] : role
       })
       .toString()
-      .replaceAll(",", ", ");
+      .replaceAll(",", ", ")
 
-    const cellStatus = user.active ? "" : "table__cell--inactive";
+    const cellStatus = user.active ? "" : "table__cell--inactive"
 
     return (
       <tr className="table__row user">
@@ -36,8 +36,8 @@ const User = ({ userId }) => {
           </button>
         </td>
       </tr>
-    );
-  } else return null;
-};
+    )
+  } else return null
+}
 
-export default User;
+export default User

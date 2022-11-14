@@ -1,5 +1,5 @@
-import { useGetIssuesQuery } from "./issuesApiSlice";
-import Issue from "./Issue";
+import { useGetIssuesQuery } from "./issuesApiSlice"
+import Issue from "./Issue"
 
 const IssuesList = () => {
   const {
@@ -12,25 +12,25 @@ const IssuesList = () => {
     pollingInterval: 15000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
-  });
+  })
 
-  let content;
+  let content
 
-  if (isLoading) content = <p>Loading...</p>;
+  if (isLoading) content = <p>Loading...</p>
 
   if (isError) {
-    content = <p className="errmsg">{error?.data?.message}</p>;
+    content = <p className="errmsg">{error?.data?.message}</p>
     // console.error(error);
     // console.error(error?.data);
-    console.error(error?.data?.message);
+    console.error(error?.data?.message)
   }
 
   if (isSuccess) {
-    const { ids } = issues;
+    const { ids } = issues
 
     const tableContent = ids?.length
       ? ids.map((issueId) => <Issue key={issueId} issueId={issueId} />)
-      : null;
+      : null
 
     content = (
       <table className="table table--issues">
@@ -64,7 +64,7 @@ const IssuesList = () => {
         </thead>
         <tbody>{tableContent}</tbody>
       </table>
-    );
+    )
   }
 
   // title: {
@@ -95,7 +95,7 @@ const IssuesList = () => {
   //   default: 0,
   // },
 
-  return content;
-};
+  return content
+}
 
-export default IssuesList;
+export default IssuesList

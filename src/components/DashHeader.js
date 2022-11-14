@@ -1,42 +1,42 @@
-import { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useEffect } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
+import { useNavigate, Link, useLocation } from "react-router-dom"
 
-import { useSendLogoutMutation } from "../features/auth/authApiSlice";
+import { useSendLogoutMutation } from "../features/auth/authApiSlice"
 
-const DASH_REGEX = /^\dash(\/)?$/;
-const ISSUES_REGEX = /^\dash\/issues(\/)?$/;
-const USERS_REGEX = /^\dash\/users(\/)?$/;
+const DASH_REGEX = /^\dash(\/)?$/
+const ISSUES_REGEX = /^\dash\/issues(\/)?$/
+const USERS_REGEX = /^\dash\/users(\/)?$/
 
 const DashHeader = () => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
 
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
-    useSendLogoutMutation();
+    useSendLogoutMutation()
 
   useEffect(() => {
-    if (isSuccess) navigate("/");
-  }, [isSuccess, navigate]);
+    if (isSuccess) navigate("/")
+  }, [isSuccess, navigate])
 
-  const onLogoutClicked = () => sendLogout();
+  const onLogoutClicked = () => sendLogout()
 
-  if (isLoading) return <p>Logging Out...</p>;
+  if (isLoading) return <p>Logging Out...</p>
 
-  if (isError) return <p>Error: {error.data?.message}</p>;
+  if (isError) return <p>Error: {error.data?.message}</p>
 
   const smallDashContainer =
     !DASH_REGEX.test(pathname) &&
     !ISSUES_REGEX.test(pathname) &&
-    !USERS_REGEX.test(pathname);
-  const dashClass = smallDashContainer ? "dash-header__container--small" : null;
+    !USERS_REGEX.test(pathname)
+  const dashClass = smallDashContainer ? "dash-header__container--small" : null
 
   const logoutButton = (
     <button className="icon-button" title="Logout" onClick={onLogoutClicked}>
       <FontAwesomeIcon icon={faRightFromBracket} />
     </button>
-  );
+  )
 
   const content = (
     <header className="dash-header">
@@ -50,9 +50,9 @@ const DashHeader = () => {
         </nav>
       </div>
     </header>
-  );
+  )
 
-  return content;
-};
+  return content
+}
 
-export default DashHeader;
+export default DashHeader

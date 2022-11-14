@@ -1,31 +1,31 @@
-import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
-import { apiSlice } from "../../app/api/apiSlice";
+import { createSelector, createEntityAdapter } from "@reduxjs/toolkit"
+import { apiSlice } from "../../app/api/apiSlice"
 
-const issuesAdapter = createEntityAdapter({});
+const issuesAdapter = createEntityAdapter({})
 
-const initialState = issuesAdapter.getInitialState();
+const initialState = issuesAdapter.getInitialState()
 
 export const issuesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getIssues: builder.query({
       query: () => "/issues",
       validateStatus: (response, result) => {
-        return response.status === 200 && !result.isError;
+        return response.status === 200 && !result.isError
       },
       transformResponse: (responseData) => {
         const loadedIssues = responseData.map((issue) => {
-          issue.id = issue._id;
-          return issue;
-        });
-        return issuesAdapter.setAll(initialState, loadedIssues);
+          issue.id = issue._id
+          return issue
+        })
+        return issuesAdapter.setAll(initialState, loadedIssues)
       },
       providesTags: (result, error, arg) => {
         if (result?.ids) {
           return [
             { tpe: "Issue", id: "LIST" },
             ...result.ids.map((id) => ({ type: "Issue", id })),
-          ];
-        } else return [{ type: "Issue", id: "LIST" }];
+          ]
+        } else return [{ type: "Issue", id: "LIST" }]
       },
     }),
     addNewIssue: builder.mutation({
@@ -57,17 +57,17 @@ export const issuesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: "Issue", id: arg.id }],
     }),
   }),
-});
+})
 
 export const {
   useGetIssuesQuery,
   useAddNewIssueMutation,
   useUpdateIssueMutation,
   useDeleteIssueMutation,
-} = issuesApiSlice;
+} = issuesApiSlice
 
 //returns the query result object
-export const selectIssuesResult = issuesApiSlice.endpoints.getIssues.select();
+export const selectIssuesResult = issuesApiSlice.endpoints.getIssues.select()
 
 //creates memoized selector
 // Memoization:
@@ -75,7 +75,7 @@ export const selectIssuesResult = issuesApiSlice.endpoints.getIssues.select();
 const selectIssuesData = createSelector(
   selectIssuesResult,
   (issueResult) => issueResult.data // normalized stae object with ids & entities
-);
+)
 
 //getSelectors creates these selectors and we rename them with aliases using destructuring
 export const {
@@ -85,4 +85,4 @@ export const {
   // Pass in a selector that returns the issues slice of state
 } = issuesAdapter.getSelectors(
   (state) => selectIssuesData(state) ?? initialState //if selectIssuesData(state) is null, then use initialState instead
-);
+)

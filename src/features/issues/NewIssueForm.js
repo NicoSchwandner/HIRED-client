@@ -1,45 +1,45 @@
-import { useState, useEffect } from "react";
-import { useAddNewIssueMutation } from "./issuesApiSlice";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from "react"
+import { useAddNewIssueMutation } from "./issuesApiSlice"
+import { useNavigate } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSave } from "@fortawesome/free-solid-svg-icons"
 
 const NewIssueForm = ({ users }) => {
   const [addNewIssue, { isLoading, isSuccess, isError, error }] =
-    useAddNewIssueMutation();
+    useAddNewIssueMutation()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [assignedTo, setAssignedTo] = useState(users[0].id);
-  const [submitter, setSubmitter] = useState(users[0].id);
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [assignedTo, setAssignedTo] = useState(users[0].id)
+  const [submitter, setSubmitter] = useState(users[0].id)
   // const [submitter, setSubmitter] = useState(currentUser.id);
-  const [type, setType] = useState("");
+  const [type, setType] = useState("")
 
   useEffect(() => {
     if (isSuccess) {
-      setTitle("");
-      setDescription("");
-      setAssignedTo("");
-      setSubmitter("");
-      setType("");
-      navigate("/dash/issues");
+      setTitle("")
+      setDescription("")
+      setAssignedTo("")
+      setSubmitter("")
+      setType("")
+      navigate("/dash/issues")
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, navigate])
 
-  const onTitleChanged = (e) => setTitle(e.target.value);
-  const onDescriptionChanged = (e) => setDescription(e.target.value);
-  const onTypeChanged = (e) => setType(e.target.value);
-  const onAssignedToChanged = (e) => setAssignedTo(e.target.value);
-  const onSubmitterChanged = (e) => setSubmitter(e.target.value);
+  const onTitleChanged = (e) => setTitle(e.target.value)
+  const onDescriptionChanged = (e) => setDescription(e.target.value)
+  const onTypeChanged = (e) => setType(e.target.value)
+  const onAssignedToChanged = (e) => setAssignedTo(e.target.value)
+  const onSubmitterChanged = (e) => setSubmitter(e.target.value)
 
   const canSave =
     [title.length, assignedTo.length, submitter.length].every(Boolean) &&
-    !isLoading;
+    !isLoading
 
   const onSaveIssueClicked = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (canSave) {
       await addNewIssue({
         title,
@@ -47,31 +47,31 @@ const NewIssueForm = ({ users }) => {
         assignedTo,
         submitter,
         type,
-      });
+      })
     }
-  };
+  }
 
   const userOptions = users.map((user) => {
     return (
       <option key={user.id} value={user.id} label={user.username}>
         {user.username}
       </option>
-    );
-  });
+    )
+  })
 
-  const errClass = isError ? "errmsg" : "offscreen";
+  const errClass = isError ? "errmsg" : "offscreen"
 
   const validTitleClass = !Boolean(title.length)
     ? "form__input--incomplete"
-    : "";
+    : ""
 
   const validAssignedToClass = !Boolean(assignedTo.length)
     ? "form__input--incomplete"
-    : "";
+    : ""
 
   const validSubmitterClass = !Boolean(submitter.length)
     ? "form__input--incomplete"
-    : "";
+    : ""
 
   const content = (
     <>
@@ -152,9 +152,9 @@ const NewIssueForm = ({ users }) => {
         />
       </form>
     </>
-  );
+  )
 
-  return content;
-};
+  return content
+}
 
-export default NewIssueForm;
+export default NewIssueForm

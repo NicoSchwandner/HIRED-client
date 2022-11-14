@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
-import React from "react";
+import React from "react"
 
 const Public = () => {
   const content = (
@@ -36,8 +36,8 @@ const Public = () => {
         <Link to="/login">User Login</Link>
       </footer>
     </section>
-  );
-  return content;
-};
+  )
+  return content
+}
 
-export default Public;
+export default Public

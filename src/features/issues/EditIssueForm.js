@@ -1,51 +1,51 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 import {
   useUpdateIssueMutation,
   useDeleteIssueMutation,
-} from "./issuesApiSlice";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { ISSUE_STATUS, ISSUE_STATUS_NR2STR } from "../../config/issue_status";
-import { ISSUE_TYPE, ISSUE_TYPE_NR2STR } from "../../config/issue_type";
+} from "./issuesApiSlice"
+import { useNavigate } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons"
+import { ISSUE_STATUS, ISSUE_STATUS_NR2STR } from "../../config/issue_status"
+import { ISSUE_TYPE, ISSUE_TYPE_NR2STR } from "../../config/issue_type"
 
 const EditIssueForm = ({ users, issue }) => {
   const [updateIssue, { isLoading, isSuccess, isError, error }] =
-    useUpdateIssueMutation();
+    useUpdateIssueMutation()
   const [
     deleteIssue,
     { isSuccess: isDelSuccess, isError: isDelError, error: delError },
-  ] = useDeleteIssueMutation();
+  ] = useDeleteIssueMutation()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [title, setTitle] = useState(issue.title);
+  const [title, setTitle] = useState(issue.title)
   const [description, setDescription] = useState(
     issue.description ? issue.description : ""
-  );
-  const [assignedTo, setAssignedTo] = useState(issue.assignedTo);
-  const [submitter, setSubmitter] = useState(issue.submitter);
-  const [type, setType] = useState(issue.type);
-  const [status, setStatus] = useState(issue.status);
+  )
+  const [assignedTo, setAssignedTo] = useState(issue.assignedTo)
+  const [submitter, setSubmitter] = useState(issue.submitter)
+  const [type, setType] = useState(issue.type)
+  const [status, setStatus] = useState(issue.status)
 
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
-      setTitle("");
-      setDescription("");
-      setAssignedTo("");
-      setSubmitter("");
-      setType("");
-      setStatus("");
-      navigate("/dash/issues");
+      setTitle("")
+      setDescription("")
+      setAssignedTo("")
+      setSubmitter("")
+      setType("")
+      setStatus("")
+      navigate("/dash/issues")
     }
-  }, [isSuccess, isDelSuccess, navigate]);
+  }, [isSuccess, isDelSuccess, navigate])
 
-  const onTitleChanged = (e) => setTitle(e.target.value);
-  const onDescriptionChanged = (e) => setDescription(e.target.value);
-  const onTypeChanged = (e) => setType(e.target.value);
-  const onStatusChanged = (e) => setStatus(e.target.value);
-  const onAssignedToChanged = (e) => setAssignedTo(e.target.value);
-  const onSubmitterChanged = (e) => setSubmitter(e.target.value);
+  const onTitleChanged = (e) => setTitle(e.target.value)
+  const onDescriptionChanged = (e) => setDescription(e.target.value)
+  const onTypeChanged = (e) => setType(e.target.value)
+  const onStatusChanged = (e) => setStatus(e.target.value)
+  const onAssignedToChanged = (e) => setAssignedTo(e.target.value)
+  const onSubmitterChanged = (e) => setSubmitter(e.target.value)
 
   const onSaveIssueClicked = async (e) => {
     if (canSave) {
@@ -57,13 +57,13 @@ const EditIssueForm = ({ users, issue }) => {
         submitter,
         status,
         type,
-      });
+      })
     }
-  };
+  }
 
   const onDeleteIssueClicked = async (e) => {
-    await deleteIssue({ id: issue.id });
-  };
+    await deleteIssue({ id: issue.id })
+  }
 
   const created = new Date(issue.createdAt).toLocaleString("en-US", {
     day: "numeric",
@@ -72,7 +72,7 @@ const EditIssueForm = ({ users, issue }) => {
     hour: "numeric",
     minute: "numeric",
     second: "numeric",
-  });
+  })
   const updated = new Date(issue.updatedAt).toLocaleString("en-US", {
     day: "numeric",
     month: "long",
@@ -80,51 +80,51 @@ const EditIssueForm = ({ users, issue }) => {
     hour: "numeric",
     minute: "numeric",
     second: "numeric",
-  });
+  })
 
   const userOptions = users.map((user) => {
     return (
       <option key={user.id} value={user.id} label={user.username}>
         {user.username}
       </option>
-    );
-  });
+    )
+  })
 
   const typeOptions = Object.values(ISSUE_TYPE).map((type) => {
     return (
       <option key={type} value={type} label={ISSUE_TYPE_NR2STR[type]}>
         {type}
       </option>
-    );
-  });
+    )
+  })
 
   const statusOptions = Object.values(ISSUE_STATUS).map((status) => {
     return (
       <option key={status} value={status} label={ISSUE_STATUS_NR2STR[status]}>
         {status}
       </option>
-    );
-  });
+    )
+  })
 
   const canSave =
     [title.length, assignedTo.length, submitter.length].every(Boolean) &&
-    !isLoading;
+    !isLoading
 
-  const errClass = isError || isDelError ? "errmsg" : "offscreen";
+  const errClass = isError || isDelError ? "errmsg" : "offscreen"
 
   const validTitleClass = !Boolean(title.length)
     ? "form__input--incomplete"
-    : "";
+    : ""
 
   const validAssignedToClass = !Boolean(assignedTo.length)
     ? "form__input--incomplete"
-    : "";
+    : ""
 
   const validSubmitterClass = !Boolean(submitter.length)
     ? "form__input--incomplete"
-    : "";
+    : ""
 
-  const errContent = (error?.data?.message || delError?.data?.message) ?? "";
+  const errContent = (error?.data?.message || delError?.data?.message) ?? ""
 
   const content = (
     <>
@@ -243,9 +243,9 @@ const EditIssueForm = ({ users, issue }) => {
         </div>
       </form>
     </>
-  );
+  )
 
-  return content;
-};
+  return content
+}
 
-export default EditIssueForm;
+export default EditIssueForm

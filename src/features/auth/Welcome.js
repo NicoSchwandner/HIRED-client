@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 const Welcome = () => {
-  const date = new Date();
+  const date = new Date()
   // Formatting the date:
   // https://dev.to/rsa/perfectly-localizing-date-time-with-intl-datetimeformat-ack
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
   const today = new Intl.DateTimeFormat("en-us", {
     dateStyle: "full",
     timeStyle: "long",
-  }).format(date);
+  }).format(date)
 
   const content = (
     <section className="welcome">
@@ -27,9 +27,9 @@ const Welcome = () => {
         <Link to="/dash/users/new">Create new user</Link>
       </p>
     </section>
-  );
+  )
 
-  return content;
-};
+  return content
+}
 
-export default Welcome;
+export default Welcome

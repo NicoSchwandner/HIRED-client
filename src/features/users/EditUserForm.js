@@ -1,71 +1,71 @@
-import { useState, useEffect } from "react";
-import { useUpdateUserMutation, useDeleteUserMutation } from "./usersApiSlice";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { ROLES, ROLES_NR2STR } from "../../config/roles";
+import { useState, useEffect } from "react"
+import { useUpdateUserMutation, useDeleteUserMutation } from "./usersApiSlice"
+import { useNavigate } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons"
+import { ROLES, ROLES_NR2STR } from "../../config/roles"
 
-const USER_REGEX = /^[A-z]{3,20}$/;
-const PWD_REGEX = /^[A-z0-9!@#$%.:_]{8,64}$/;
+const USER_REGEX = /^[A-z]{3,20}$/
+const PWD_REGEX = /^[A-z0-9!@#$%.:_]{8,64}$/
 
 const EditUserForm = ({ user }) => {
   const [updateUser, { isLoading, isSuccess, isError, error }] =
-    useUpdateUserMutation();
+    useUpdateUserMutation()
   const [
     deleteUser,
     { isSuccess: isDelSuccess, isError: isDelError, error: delError },
-  ] = useDeleteUserMutation();
+  ] = useDeleteUserMutation()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [username, setUsername] = useState(user.username);
-  const [validUsername, setValidUsername] = useState(false);
-  const [password, setPassword] = useState("");
-  const [validPassword, setValidPassword] = useState(false);
-  const [roles, setRoles] = useState(user.roles);
-  const [active, setActive] = useState(user.active);
-
-  useEffect(() => {
-    setValidUsername(USER_REGEX.test(username));
-  }, [username]);
+  const [username, setUsername] = useState(user.username)
+  const [validUsername, setValidUsername] = useState(false)
+  const [password, setPassword] = useState("")
+  const [validPassword, setValidPassword] = useState(false)
+  const [roles, setRoles] = useState(user.roles)
+  const [active, setActive] = useState(user.active)
 
   useEffect(() => {
-    setValidPassword(PWD_REGEX.test(password));
-  }, [password]);
+    setValidUsername(USER_REGEX.test(username))
+  }, [username])
+
+  useEffect(() => {
+    setValidPassword(PWD_REGEX.test(password))
+  }, [password])
 
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
-      setUsername("");
-      setPassword("");
-      setRoles([]);
-      navigate("/dash/users");
+      setUsername("")
+      setPassword("")
+      setRoles([])
+      navigate("/dash/users")
     }
-  }, [isSuccess, isDelSuccess, navigate]);
+  }, [isSuccess, isDelSuccess, navigate])
 
-  const onUsernameChanged = (e) => setUsername(e.target.value);
-  const onPasswordChanged = (e) => setPassword(e.target.value);
+  const onUsernameChanged = (e) => setUsername(e.target.value)
+  const onPasswordChanged = (e) => setPassword(e.target.value)
 
   const onRolesChanged = (e) => {
     const values = Array.from(
       e.target.selectedOptions,
       (option) => option.value
-    );
-    setRoles(values);
-  };
+    )
+    setRoles(values)
+  }
 
-  const onActiveChanged = () => setActive((prev) => !prev);
+  const onActiveChanged = () => setActive((prev) => !prev)
 
   const onSaveUserClicked = async (e) => {
     if (password) {
-      await updateUser({ id: user.id, username, password, roles, active });
+      await updateUser({ id: user.id, username, password, roles, active })
     } else {
-      await updateUser({ id: user.id, username, roles, active });
+      await updateUser({ id: user.id, username, roles, active })
     }
-  };
+  }
 
   const onDeleteUserClicked = async (e) => {
-    await deleteUser({ id: user.id });
-  };
+    await deleteUser({ id: user.id })
+  }
 
   // const options = Object.values(ROLES_NR2STR).map((role) => {
   const options = Object.values(ROLES).map((role) => {
@@ -73,26 +73,26 @@ const EditUserForm = ({ user }) => {
       <option key={role} value={role} label={ROLES_NR2STR[role]}>
         {role}
       </option>
-    );
-  });
+    )
+  })
 
-  let canSave;
+  let canSave
   if (password) {
     canSave =
-      [roles.length, validUsername, validPassword].every(Boolean) && !isLoading;
+      [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
   } else {
-    canSave = [roles.length, validUsername].every(Boolean) && !isLoading;
+    canSave = [roles.length, validUsername].every(Boolean) && !isLoading
   }
 
-  const errClass = isError || isDelError ? "errmsg" : "offscreen";
-  const validUserClass = !validUsername ? "form__input--incomplete" : "";
+  const errClass = isError || isDelError ? "errmsg" : "offscreen"
+  const validUserClass = !validUsername ? "form__input--incomplete" : ""
   const validPwdClass =
-    password && !validPassword ? "form__input--incomplete" : "";
+    password && !validPassword ? "form__input--incomplete" : ""
   const validRolesClass = !Boolean(roles.length)
     ? "form__input--incomplete"
-    : "";
+    : ""
 
-  const errContent = (error?.data?.message || delError?.data?.message) ?? "";
+  const errContent = (error?.data?.message || delError?.data?.message) ?? ""
 
   const content = (
     <>
@@ -176,9 +176,9 @@ const EditUserForm = ({ user }) => {
         </select>
       </form>
     </>
-  );
+  )
 
-  return content;
-};
+  return content
+}
 
-export default EditUserForm;
+export default EditUserForm

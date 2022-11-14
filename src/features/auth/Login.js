@@ -1,56 +1,56 @@
-import { useRef, useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setCredentials } from "./authSlice";
-import { useLoginMutation } from "./authApiSlice";
+import { useRef, useState, useEffect } from "react"
+import { useNavigate, Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setCredentials } from "./authSlice"
+import { useLoginMutation } from "./authApiSlice"
 
 const Login = () => {
-  const userRef = useRef();
-  const errRef = useRef();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errMsg, setErrMsg] = useState("");
+  const userRef = useRef()
+  const errRef = useRef()
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [errMsg, setErrMsg] = useState("")
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const [login, { isLoading }] = useLoginMutation();
-
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
+  const [login, { isLoading }] = useLoginMutation()
 
   useEffect(() => {
-    setErrMsg("");
-  }, [username, password]);
+    userRef.current.focus()
+  }, [])
 
-  const handleUserInput = (e) => setUsername(e.target.value);
-  const handlePwdInput = (e) => setPassword(e.target.value);
+  useEffect(() => {
+    setErrMsg("")
+  }, [username, password])
+
+  const handleUserInput = (e) => setUsername(e.target.value)
+  const handlePwdInput = (e) => setPassword(e.target.value)
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const { accessToken } = await login({ username, password }).unwrap(); //unwrap to not use RTK Query error / isError blocks
-      dispatch(setCredentials({ accessToken }));
-      setUsername("");
-      setPassword("");
-      navigate("/dash");
+      const { accessToken } = await login({ username, password }).unwrap() //unwrap to not use RTK Query error / isError blocks
+      dispatch(setCredentials({ accessToken }))
+      setUsername("")
+      setPassword("")
+      navigate("/dash")
     } catch (err) {
       if (!err.status) {
-        setErrMsg("No Server Response");
+        setErrMsg("No Server Response")
       } else if (err.status === 400) {
-        setErrMsg("Missing Username or Password");
+        setErrMsg("Missing Username or Password")
       } else if (err.status === 401) {
-        setErrMsg("Wrong Username or Password");
+        setErrMsg("Wrong Username or Password")
       } else {
-        setErrMsg(err.data?.message);
+        setErrMsg(err.data?.message)
       }
-      errRef.current.focus();
+      errRef.current.focus()
     }
-  };
+  }
 
-  const errClass = errMsg ? "errmsg" : "offscreen";
+  const errClass = errMsg ? "errmsg" : "offscreen"
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading...</p>
 
   const content = (
     <section className="public">
@@ -90,9 +90,9 @@ const Login = () => {
         <Link to="/">Back to Home</Link>
       </footer>
     </section>
-  );
+  )
 
-  return content;
-};
+  return content
+}
 
-export default Login;
+export default Login

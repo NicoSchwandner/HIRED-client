@@ -1,16 +1,16 @@
-import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
-import Public from "./components/Public";
-import Login from "./features/auth/Login";
-import DashLayout from "./components/DashLayout";
-import Welcome from "./features/auth/Welcome";
-import IssuesList from "./features/issues/IssuesList";
-import UsersList from "./features/users/UsersList";
-import EditUser from "./features/users/EditUser";
-import NewUserForm from "./features/users/NewUserForm";
-import EditIssue from "./features/issues/EditIssue";
-import NewIssue from "./features/issues/NewIssue";
-import Prefetch from "./features/auth/Prefetch";
+import { Routes, Route } from "react-router-dom"
+import Layout from "./components/Layout"
+import Public from "./components/Public"
+import Login from "./features/auth/Login"
+import DashLayout from "./components/DashLayout"
+import Welcome from "./features/auth/Welcome"
+import IssuesList from "./features/issues/IssuesList"
+import UsersList from "./features/users/UsersList"
+import EditUser from "./features/users/EditUser"
+import NewUserForm from "./features/users/NewUserForm"
+import EditIssue from "./features/issues/EditIssue"
+import NewIssue from "./features/issues/NewIssue"
+import Prefetch from "./features/auth/Prefetch"
 
 function App() {
   return (
@@ -39,7 +39,7 @@ function App() {
         </Route>
       </Route>
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,31 +1,31 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
+import { useNavigate } from "react-router-dom"
 
-import { useSelector } from "react-redux";
-import { selectIssueById } from "./issuesApiSlice";
+import { useSelector } from "react-redux"
+import { selectIssueById } from "./issuesApiSlice"
 
-import { ISSUE_STATUS_NR2STR } from "../../config/issue_status";
+import { ISSUE_STATUS_NR2STR } from "../../config/issue_status"
 
-import { ISSUE_TYPE_NR2STR } from "../../config/issue_type";
+import { ISSUE_TYPE_NR2STR } from "../../config/issue_type"
 
 const Issue = ({ issueId }) => {
-  const issue = useSelector((state) => selectIssueById(state, issueId));
+  const issue = useSelector((state) => selectIssueById(state, issueId))
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   if (issue) {
     const created = new Date(issue.createdAt).toLocaleString("en-us", {
       day: "numeric",
       month: "long",
-    });
+    })
 
     const updated = new Date(issue.updatedAt).toLocaleString("en-us", {
       day: "numeric",
       month: "long",
-    });
+    })
 
-    const handleEdit = () => navigate(`/dash/issues/${issueId}`);
+    const handleEdit = () => navigate(`/dash/issues/${issueId}`)
 
     return (
       <tr className="table__row issue">
@@ -60,11 +60,11 @@ const Issue = ({ issueId }) => {
           </button>
         </td>
       </tr>
-    );
-  } else return null;
-};
+    )
+  } else return null
+}
 
-export default Issue;
+export default Issue
 
 // "_id": "636525f93db6b9f498551978",
 // "title": "Second issue: revise user stories",
