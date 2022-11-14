@@ -8,7 +8,7 @@ const IssuesList = () => {
     isSuccess,
     isError,
     error,
-  } = useGetIssuesQuery(undefined, {
+  } = useGetIssuesQuery("issuesList", {
     pollingInterval: 15000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,

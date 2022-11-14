@@ -11,6 +11,7 @@ import NewUserForm from "./features/users/NewUserForm"
 import EditIssue from "./features/issues/EditIssue"
 import NewIssue from "./features/issues/NewIssue"
 import Prefetch from "./features/auth/Prefetch"
+import PersistLogin from "./features/auth/PersistLogin"
 
 function App() {
   return (
@@ -19,23 +20,25 @@ function App() {
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
 
-        <Route element={<Prefetch />}>
-          <Route path="dash" element={<DashLayout />}>
-            <Route index element={<Welcome />} />
+        <Route element={<PersistLogin />}>
+          <Route element={<Prefetch />}>
+            <Route path="dash" element={<DashLayout />}>
+              <Route index element={<Welcome />} />
 
-            <Route path="users">
-              <Route index element={<UsersList />} />
-              <Route path=":id" element={<EditUser />} />
-              <Route path="new" element={<NewUserForm />} />
-            </Route>
+              <Route path="users">
+                <Route index element={<UsersList />} />
+                <Route path=":id" element={<EditUser />} />
+                <Route path="new" element={<NewUserForm />} />
+              </Route>
 
-            <Route path="issues">
-              <Route index element={<IssuesList />} />
-              <Route path=":id" element={<EditIssue />} />
-              <Route path="new" element={<NewIssue />} />
+              <Route path="issues">
+                <Route index element={<IssuesList />} />
+                <Route path=":id" element={<EditIssue />} />
+                <Route path="new" element={<NewIssue />} />
+              </Route>
             </Route>
+            {/* End Dash */}
           </Route>
-          {/* End Dash */}
         </Route>
       </Route>
     </Routes>
