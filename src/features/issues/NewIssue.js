@@ -1,16 +1,15 @@
-import { useSelector } from "react-redux"
-import { selectAllUsers } from "../users/usersApiSlice"
 import NewIssueForm from "./NewIssueForm"
+import { useGetUsersQuery } from "../users/usersApiSlice"
+import PulseLoader from "react-spinners/PulseLoader"
 
 const NewIssue = () => {
-  const users = useSelector(selectAllUsers)
+  const { users } = useGetUsersQuery("usersList", {
+    selectFromResult: ({ data }) => ({
+      users: data?.ids.map((id) => data?.entities[id]),
+    }),
+  })
 
-  if (!users?.length)
-    return (
-      <p>
-        Currently not available - Did not receive user data or no users exist
-      </p>
-    )
+  if (!users?.length) return <PulseLoader color={"#FFF"} />
 
   const content = <NewIssueForm users={users} />
 

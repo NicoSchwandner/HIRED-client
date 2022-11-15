@@ -8,10 +8,12 @@ const initialState = issuesAdapter.getInitialState()
 export const issuesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getIssues: builder.query({
-      query: () => "/issues",
-      validateStatus: (response, result) => {
-        return response.status === 200 && !result.isError
-      },
+      query: () => ({
+        url: "/issues",
+        validateStatus: (response, result) => {
+          return response.status === 200 && !result.isError
+        },
+      }),
       transformResponse: (responseData) => {
         const loadedIssues = responseData.map((issue) => {
           issue.id = issue._id

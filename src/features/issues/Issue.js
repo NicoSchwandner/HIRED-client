@@ -1,16 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom"
-
-import { useSelector } from "react-redux"
-import { selectIssueById } from "./issuesApiSlice"
+import { useGetIssuesQuery } from "./issuesApiSlice"
+import { memo } from "react"
 
 import { ISSUE_STATUS_NR2STR } from "../../config/issue_status"
-
 import { ISSUE_TYPE_NR2STR } from "../../config/issue_type"
 
 const Issue = ({ issueId }) => {
-  const issue = useSelector((state) => selectIssueById(state, issueId))
+  const { issue } = useGetIssuesQuery("issuesList", {
+    selectFromResult: ({ data }) => ({
+      issue: data?.entities[issueId],
+    }),
+  })
 
   const navigate = useNavigate()
 
@@ -64,7 +66,9 @@ const Issue = ({ issueId }) => {
   } else return null
 }
 
-export default Issue
+const memoizedIssue = memo(Issue)
+
+export default memoizedIssue
 
 // "_id": "636525f93db6b9f498551978",
 // "title": "Second issue: revise user stories",
