@@ -2,8 +2,10 @@ import { useGetIssuesQuery } from "./issuesApiSlice"
 import Issue from "./Issue"
 import useAuth from "../../hooks/useAuth"
 import PulseLoader from "react-spinners/PulseLoader"
+import useTitle from "../../hooks/useTitle"
 
 const IssuesList = () => {
+  useTitle("Issues - HIRED Issue Tracker")
   const { /*username,*/ userId, /*isDeveloper,*/ isSubmitter, isAdmin } =
     useAuth()
   const {

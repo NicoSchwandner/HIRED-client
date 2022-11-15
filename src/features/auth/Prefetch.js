@@ -10,7 +10,7 @@ const Prefetch = () => {
       issuesApiSlice.util.prefetch("getIssues", "issuesList", { force: true })
     )
     store.dispatch(
-      issuesApiSlice.util.prefetch("getUsers", "usersList", { force: true })
+      usersApiSlice.util.prefetch("getUsers", "usersList", { force: true })
     )
   }, [])
 
