@@ -25,7 +25,7 @@ const EditIssue = () => {
   if (!issue || !users?.length) return <PulseLoader color={"#FFF"} />
 
   if (!isSubmitter && !isAdmin) {
-    if (issue.userId !== userId) {
+    if (issue.assignedTo !== userId) {
       return <p className="errmsg">No access</p>
     }
   }
