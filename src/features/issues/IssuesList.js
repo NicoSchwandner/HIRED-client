@@ -1,7 +1,10 @@
 import { useGetIssuesQuery } from "./issuesApiSlice"
 import Issue from "./Issue"
+import useAuth from "../../hooks/useAuth"
 
 const IssuesList = () => {
+  const { /*username,*/ userId, /*isDeveloper,*/ isSubmitter, isAdmin } =
+    useAuth()
   const {
     data: issues,
     isLoading,
@@ -26,11 +29,20 @@ const IssuesList = () => {
   }
 
   if (isSuccess) {
-    const { ids } = issues
+    const { ids, entities } = issues
 
-    const tableContent = ids?.length
-      ? ids.map((issueId) => <Issue key={issueId} issueId={issueId} />)
-      : null
+    let filteredIds
+    if (isAdmin || isSubmitter) {
+      filteredIds = [...ids]
+    } else {
+      filteredIds = ids.filter(
+        (issueId) => entities[issueId].assignedTo === userId
+      )
+    }
+
+    const tableContent =
+      ids?.length &&
+      filteredIds.map((issueId) => <Issue key={issueId} issueId={issueId} />)
 
     content = (
       <table className="table table--issues">

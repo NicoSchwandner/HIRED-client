@@ -8,8 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { ISSUE_STATUS, ISSUE_STATUS_NR2STR } from "../../config/issue_status"
 import { ISSUE_TYPE, ISSUE_TYPE_NR2STR } from "../../config/issue_type"
+import useAuth from "../../hooks/useAuth"
 
 const EditIssueForm = ({ users, issue }) => {
+  const { isSubmitter, isAdmin } = useAuth()
+
   const [updateIssue, { isLoading, isSuccess, isError, error }] =
     useUpdateIssueMutation()
   const [
@@ -126,6 +129,19 @@ const EditIssueForm = ({ users, issue }) => {
 
   const errContent = (error?.data?.message || delError?.data?.message) ?? ""
 
+  let deleteButton = null
+  if (isSubmitter || isAdmin) {
+    deleteButton = (
+      <button
+        className="icon-button"
+        title="Delete"
+        onClick={onDeleteIssueClicked}
+      >
+        <FontAwesomeIcon icon={faTrashCan} />
+      </button>
+    )
+  }
+
   const content = (
     <>
       <p className={errClass}>{errContent}</p>
@@ -142,13 +158,7 @@ const EditIssueForm = ({ users, issue }) => {
             >
               <FontAwesomeIcon icon={faSave} />
             </button>
-            <button
-              className="icon-button"
-              title="Delete"
-              onClick={onDeleteIssueClicked}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
+            {deleteButton}
           </div>
         </div>
         <label className="form__label" htmlFor="title">

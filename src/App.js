@@ -12,34 +12,50 @@ import EditIssue from "./features/issues/EditIssue"
 import NewIssue from "./features/issues/NewIssue"
 import Prefetch from "./features/auth/Prefetch"
 import PersistLogin from "./features/auth/PersistLogin"
+import RequireAuth from "./features/auth/RequireAuth"
+import { ROLES } from "./config/roles"
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        {/* Public routes */}
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
 
+        {/* Protected routes */}
         <Route element={<PersistLogin />}>
-          <Route element={<Prefetch />}>
-            <Route path="dash" element={<DashLayout />}>
-              <Route index element={<Welcome />} />
+          <Route
+            element={<RequireAuth allowedRoles={[...Object.values(ROLES)]} />}
+          >
+            <Route element={<Prefetch />}>
+              <Route path="dash" element={<DashLayout />}>
+                <Route index element={<Welcome />} />
 
-              <Route path="users">
-                <Route index element={<UsersList />} />
-                <Route path=":id" element={<EditUser />} />
-                <Route path="new" element={<NewUserForm />} />
-              </Route>
+                <Route
+                  element={
+                    <RequireAuth
+                      allowedRoles={[ROLES.Admin, ROLES.Submitter]}
+                    />
+                  }
+                >
+                  <Route path="users">
+                    <Route index element={<UsersList />} />
+                    <Route path=":id" element={<EditUser />} />
+                    <Route path="new" element={<NewUserForm />} />
+                  </Route>
+                </Route>
 
-              <Route path="issues">
-                <Route index element={<IssuesList />} />
-                <Route path=":id" element={<EditIssue />} />
-                <Route path="new" element={<NewIssue />} />
+                <Route path="issues">
+                  <Route index element={<IssuesList />} />
+                  <Route path=":id" element={<EditIssue />} />
+                  <Route path="new" element={<NewIssue />} />
+                </Route>
               </Route>
             </Route>
-            {/* End Dash */}
           </Route>
         </Route>
+        {/* End Protected routes */}
       </Route>
     </Routes>
   )

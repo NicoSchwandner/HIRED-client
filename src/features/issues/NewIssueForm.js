@@ -3,6 +3,7 @@ import { useAddNewIssueMutation } from "./issuesApiSlice"
 import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSave } from "@fortawesome/free-solid-svg-icons"
+import { ISSUE_TYPE, ISSUE_TYPE_NR2STR } from "../../config/issue_type"
 
 const NewIssueForm = ({ users }) => {
   const [addNewIssue, { isLoading, isSuccess, isError, error }] =
@@ -59,6 +60,14 @@ const NewIssueForm = ({ users }) => {
     )
   })
 
+  const typeOptions = Object.values(ISSUE_TYPE).map((type) => {
+    return (
+      <option key={type} value={type} label={ISSUE_TYPE_NR2STR[type]}>
+        {type}
+      </option>
+    )
+  })
+
   const errClass = isError ? "errmsg" : "offscreen"
 
   const validTitleClass = !Boolean(title.length)
@@ -102,7 +111,7 @@ const NewIssueForm = ({ users }) => {
         <label className="form__label" htmlFor="description">
           Description:
         </label>
-        <input
+        <textarea
           className={"form__input form__input--text"}
           id="description"
           name="description"
@@ -141,15 +150,15 @@ const NewIssueForm = ({ users }) => {
         <label className="form__label" htmlFor="type">
           Type:
         </label>
-        <input
-          className={"form__input"}
+        <select
+          className={"form__select"}
           id="type"
           name="type"
-          type="text"
-          autoComplete="off"
           value={type}
           onChange={onTypeChanged}
-        />
+        >
+          {typeOptions}
+        </select>
       </form>
     </>
   )

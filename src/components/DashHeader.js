@@ -1,15 +1,24 @@
 import { useEffect } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons"
+import {
+  faFileCirclePlus,
+  faFilePen,
+  faUserGear,
+  faUserPlus,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons"
 import { useNavigate, Link, useLocation } from "react-router-dom"
 
 import { useSendLogoutMutation } from "../features/auth/authApiSlice"
+import useAuth from "../hooks/useAuth"
 
-const DASH_REGEX = /^\dash(\/)?$/
-const ISSUES_REGEX = /^\dash\/issues(\/)?$/
-const USERS_REGEX = /^\dash\/users(\/)?$/
+const DASH_REGEX = /^\/dash(\/)?$/
+const ISSUES_REGEX = /^\/dash\/issues(\/)?$/
+const USERS_REGEX = /^\/dash\/users(\/)?$/
 
 const DashHeader = () => {
+  const { /*isDeveloper,*/ isSubmitter, isAdmin } = useAuth()
+
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
@@ -20,17 +29,73 @@ const DashHeader = () => {
     if (isSuccess) navigate("/")
   }, [isSuccess, navigate])
 
+  const onNewIssueClicked = () => navigate("/dash/issues/new")
+  const onNewUserClicked = () => navigate("/dash/users/new")
+  const onIssuesClicked = () => navigate("/dash/issues")
+  const onUsersClicked = () => navigate("/dash/users")
+
   const onLogoutClicked = () => sendLogout()
 
-  if (isLoading) return <p>Logging Out...</p>
-
-  if (isError) return <p>Error: {error.data?.message}</p>
-
-  const smallDashContainer =
+  let dashClass = null
+  if (
     !DASH_REGEX.test(pathname) &&
     !ISSUES_REGEX.test(pathname) &&
     !USERS_REGEX.test(pathname)
-  const dashClass = smallDashContainer ? "dash-header__container--small" : null
+  ) {
+    dashClass = "dash-header__container--small"
+  }
+
+  // const smallDashContainer =
+  //   !DASH_REGEX.test(pathname) &&
+  //   !ISSUES_REGEX.test(pathname) &&
+  //   !USERS_REGEX.test(pathname)
+  // const dashClass = smallDashContainer ? "dash-header__container--small" : null
+
+  let issueButton = null
+  if (!ISSUES_REGEX.test(pathname) && pathname.includes("/dash")) {
+    issueButton = (
+      <button className="icon-button" title="Issues" onClick={onIssuesClicked}>
+        <FontAwesomeIcon icon={faFilePen} />
+      </button>
+    )
+  }
+
+  let newIssueButton = null
+  if (ISSUES_REGEX.test(pathname)) {
+    newIssueButton = (
+      <button
+        className="icon-button"
+        title="New Issue"
+        onClick={onNewIssueClicked}
+      >
+        <FontAwesomeIcon icon={faFileCirclePlus} />
+      </button>
+    )
+  }
+
+  let userButton = null
+  if (isSubmitter || isAdmin) {
+    if (!USERS_REGEX.test(pathname) && pathname.includes("/dash")) {
+      userButton = (
+        <button className="icon-button" title="Users" onClick={onUsersClicked}>
+          <FontAwesomeIcon icon={faUserGear} />
+        </button>
+      )
+    }
+  }
+
+  let newUserButton = null
+  if (USERS_REGEX.test(pathname)) {
+    newUserButton = (
+      <button
+        className="icon-button"
+        title="New User"
+        onClick={onNewUserClicked}
+      >
+        <FontAwesomeIcon icon={faUserPlus} />
+      </button>
+    )
+  }
 
   const logoutButton = (
     <button className="icon-button" title="Logout" onClick={onLogoutClicked}>
@@ -38,18 +103,35 @@ const DashHeader = () => {
     </button>
   )
 
+  const errClass = isError ? "errmsg" : "offscreen"
+
+  let buttonContent
+  if (isLoading) {
+    buttonContent = <p>Logging out...</p>
+  } else {
+    buttonContent = (
+      <>
+        {issueButton}
+        {newIssueButton}
+        {userButton}
+        {newUserButton}
+        {logoutButton}
+      </>
+    )
+  }
+
   const content = (
-    <header className="dash-header">
-      <div className={`dash-header__container ${dashClass}`}>
-        <Link to="/dash">
-          <h1 className="dash-header__title">HIRED Issue Tracker</h1>
-        </Link>
-        <nav className="dash-header__nav">
-          {/* add more nav buttons later */}
-          {logoutButton}
-        </nav>
-      </div>
-    </header>
+    <>
+      <p className={errClass}>{error?.data?.message}</p>
+      <header className="dash-header">
+        <div className={`dash-header__container ${dashClass}`}>
+          <Link to="/dash">
+            <h1 className="dash-header__title">HIRED Issue Tracker</h1>
+          </Link>
+          <nav className="dash-header__nav">{buttonContent}</nav>
+        </div>
+      </header>
+    </>
   )
 
   return content
