@@ -1,6 +1,7 @@
 import { useGetIssuesQuery } from "./issuesApiSlice"
 import Issue from "./Issue"
 import useAuth from "../../hooks/useAuth"
+import PulseLoader from "react-spinners/PulseLoader"
 
 const IssuesList = () => {
   const { /*username,*/ userId, /*isDeveloper,*/ isSubmitter, isAdmin } =
@@ -19,7 +20,7 @@ const IssuesList = () => {
 
   let content
 
-  if (isLoading) content = <p>Loading...</p>
+  if (isLoading) content = <PulseLoader color={"#FFF"} />
 
   if (isError) {
     content = <p className="errmsg">{error?.data?.message}</p>
