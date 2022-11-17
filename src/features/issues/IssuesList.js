@@ -39,7 +39,7 @@ const IssuesList = () => {
       filteredIds = [...ids]
     } else {
       filteredIds = ids.filter(
-        (issueId) => entities[issueId].assignedTo === userId
+        (issueId) => entities[issueId].assignedTo._id === userId
       )
     }
 
