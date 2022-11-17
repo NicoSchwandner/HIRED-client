@@ -50,10 +50,10 @@ const Issue = ({ issueId }) => {
             : issue.type}
         </td>
         <td className={"table__cell issue__username"}>
-          {issue.assignedTo ? issue.assignedTo : ""}
+          {issue.assignedTo?.username ? issue.assignedTo?.username : ""}
         </td>
         <td className={"table__cell issue__submitter"}>
-          {issue.submitter ? issue.submitter : ""}
+          {issue.submitter?.username ? issue.submitter?.username : ""}
         </td>
 
         <td className={"table__cell"}>

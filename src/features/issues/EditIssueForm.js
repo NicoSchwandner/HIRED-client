@@ -26,8 +26,8 @@ const EditIssueForm = ({ users, issue }) => {
   const [description, setDescription] = useState(
     issue.description ? issue.description : ""
   )
-  const [assignedTo, setAssignedTo] = useState(issue.assignedTo)
-  const [submitter, setSubmitter] = useState(issue.submitter)
+  const [assignedTo, setAssignedTo] = useState(issue.assignedTo._id)
+  const [submitter, setSubmitter] = useState(issue.submitter._id)
   const [type, setType] = useState(issue.type)
   const [status, setStatus] = useState(issue.status)
 
@@ -177,7 +177,7 @@ const EditIssueForm = ({ users, issue }) => {
         <label className="form__label" htmlFor="description">
           Description:
         </label>
-        <input
+        <textarea
           className={"form__input form__input--text"}
           id="description"
           name="description"
