@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useGetIssuesQuery } from "./issuesApiSlice"
 import { memo } from "react"
 
-import { ISSUE_STATUS_NR2STR } from "../../config/issue_status"
+import { ISSUE_STATUS, ISSUE_STATUS_NR2STR } from "../../config/issue_status"
 import { ISSUE_TYPE_NR2STR } from "../../config/issue_type"
 
 const Issue = ({ issueId }) => {
@@ -22,25 +22,39 @@ const Issue = ({ issueId }) => {
       month: "long",
     })
 
-    const updated = new Date(issue.updatedAt).toLocaleString("en-us", {
-      day: "numeric",
-      month: "long",
-    })
+    // const updated = new Date(issue.updatedAt).toLocaleString("en-us", {
+    //   day: "numeric",
+    //   month: "long",
+    // })
 
     const handleEdit = () => navigate(`/dash/issues/${issueId}`)
+
+    let issueStatusClassSuffix
+    switch (issue.status) {
+      case ISSUE_STATUS.done:
+        issueStatusClassSuffix = "--done"
+        break
+      case ISSUE_STATUS.in_progress:
+        issueStatusClassSuffix = "--in-progress"
+        break
+      case ISSUE_STATUS.not_started:
+      default:
+        issueStatusClassSuffix = "--not-started"
+      // code block
+    }
 
     return (
       <tr className="table__row issue">
         <td className={"table__cell issue__status"}>
           {" "}
-          <span className="issue__status">
+          <span className={`issue__status${issueStatusClassSuffix}`}>
             {ISSUE_STATUS_NR2STR[issue.status]
               ? ISSUE_STATUS_NR2STR[issue.status]
               : issue.status}
           </span>
         </td>
         <td className={"table__cell issue__created"}>{created}</td>
-        <td className={"table__cell issue__updated"}>{updated}</td>
+        {/* <td className={"table__cell issue__updated"}>{updated}</td> */}
         <td className={"table__cell issue__title"}>
           {issue.title ? issue.title : ""}
         </td>
@@ -69,12 +83,3 @@ const Issue = ({ issueId }) => {
 const memoizedIssue = memo(Issue)
 
 export default memoizedIssue
-
-// "_id": "636525f93db6b9f498551978",
-// "title": "Second issue: revise user stories",
-// "submitter": "63651ae3e055ff440b848926",
-// "status": 0,
-// "createdAt": "2022-11-04T14:47:21.163Z",
-// "updatedAt": "2022-11-04T14:50:26.993Z",
-// "__v": 0,
-// "assignedTo": "63651ae3e055ff440b848926"

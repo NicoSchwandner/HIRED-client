@@ -3,6 +3,7 @@ import Issue from "./Issue"
 import useAuth from "../../hooks/useAuth"
 import PulseLoader from "react-spinners/PulseLoader"
 import useTitle from "../../hooks/useTitle"
+import { ISSUE_STATUS } from "../../config/issue_status"
 
 const IssuesList = () => {
   useTitle("Issues - HIRED Issue Tracker")
@@ -43,9 +44,37 @@ const IssuesList = () => {
       )
     }
 
+    const sortedAndFilteredIds = filteredIds.slice().sort((a, b) => {
+      if (entities[a].status === entities[b].status)
+        return 0 // keep original order
+      else if (entities[a].status === ISSUE_STATUS.done) {
+        // b is 0 or 1
+        return 1
+      } else if (entities[a].status === ISSUE_STATUS.in_progress) {
+        // b is 0 or 2
+        return -1
+      } else {
+        // a is 0 or other
+        // b is 0, 1 or 2 or other
+        if (entities[b].status === ISSUE_STATUS.done) {
+          return -1
+        } else if (entities[b].status === ISSUE_STATUS.in_progress) {
+          return 1
+        } else {
+          // b is 0 or other
+          return 0
+        }
+      }
+    })
+    // sortedAndFilteredIds.forEach((id) =>
+    //   console.log(`ID: ${id} Group: ${entities[id].status}`)
+    // )
+
     const tableContent =
       ids?.length &&
-      filteredIds.map((issueId) => <Issue key={issueId} issueId={issueId} />)
+      sortedAndFilteredIds.map((issueId) => (
+        <Issue key={issueId} issueId={issueId} />
+      ))
 
     content = (
       <table className="table table--issues">
@@ -57,9 +86,9 @@ const IssuesList = () => {
             <th scope="col" className="table__th issue__created">
               Created
             </th>
-            <th scope="col" className="table__th issue__updated">
+            {/*<th scope="col" className="table__th issue__updated">
               Updated
-            </th>
+            </th>*/}
             <th scope="col" className="table__th issue__title">
               Title
             </th>
@@ -81,34 +110,6 @@ const IssuesList = () => {
       </table>
     )
   }
-
-  // title: {
-  //   type: String,
-  //   required: true,
-  // },
-  // description: {
-  //   type: String,
-  //   required: false,
-  // },
-  // assignedTo: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: false,
-  // },
-  // submitter: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: true,
-  // },
-  // type: {
-  //   type: Number,
-  //   required: false,
-  // },
-  // status: {
-  //   type: Number,
-  //   required: false,
-  //   default: 0,
-  // },
 
   return content
 }
