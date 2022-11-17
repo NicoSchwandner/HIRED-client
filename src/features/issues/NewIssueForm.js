@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSave } from "@fortawesome/free-solid-svg-icons"
 import { ISSUE_TYPE, ISSUE_TYPE_NR2STR } from "../../config/issue_type"
+import useAuth from "../../hooks/useAuth"
 
 const NewIssueForm = ({ users }) => {
+  const { userId } = useAuth()
+
   const [addNewIssue, { isLoading, isSuccess, isError, error }] =
     useAddNewIssueMutation()
 
@@ -14,9 +17,8 @@ const NewIssueForm = ({ users }) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [assignedTo, setAssignedTo] = useState(users[0].id)
-  const [submitter, setSubmitter] = useState(users[0].id)
-  // const [submitter, setSubmitter] = useState(currentUser.id);
-  const [type, setType] = useState("")
+  const [submitter, setSubmitter] = useState(userId ? userId : users[0].id)
+  const [type, setType] = useState(ISSUE_TYPE.feature)
 
   useEffect(() => {
     if (isSuccess) {
@@ -36,8 +38,12 @@ const NewIssueForm = ({ users }) => {
   const onSubmitterChanged = (e) => setSubmitter(e.target.value)
 
   const canSave =
-    [title.length, assignedTo.length, submitter.length].every(Boolean) &&
-    !isLoading
+    [
+      title.length,
+      assignedTo.length,
+      submitter.length,
+      type.toString().length,
+    ].every(Boolean) && !isLoading
 
   const onSaveIssueClicked = async (e) => {
     e.preventDefault()
@@ -47,7 +53,7 @@ const NewIssueForm = ({ users }) => {
         description,
         assignedTo,
         submitter,
-        type,
+        type: type.toString(),
       })
     }
   }
@@ -79,6 +85,10 @@ const NewIssueForm = ({ users }) => {
     : ""
 
   const validSubmitterClass = !Boolean(submitter.length)
+    ? "form__input--incomplete"
+    : ""
+
+  const validTypeClass = !Boolean(type.toString().length)
     ? "form__input--incomplete"
     : ""
 
@@ -151,7 +161,7 @@ const NewIssueForm = ({ users }) => {
           Type:
         </label>
         <select
-          className={"form__select"}
+          className={`form__select ${validTypeClass}`}
           id="type"
           name="type"
           value={type}

@@ -58,8 +58,8 @@ const EditIssueForm = ({ users, issue }) => {
         description,
         assignedTo,
         submitter,
-        status,
-        type,
+        status: status.toString(),
+        type: type.toString(),
       })
     }
   }
@@ -110,8 +110,13 @@ const EditIssueForm = ({ users, issue }) => {
   })
 
   const canSave =
-    [title.length, assignedTo.length, submitter.length].every(Boolean) &&
-    !isLoading
+    [
+      title.length,
+      assignedTo.length,
+      submitter.length,
+      type.toString().length,
+      status.toString().length,
+    ].every(Boolean) && !isLoading
 
   const errClass = isError || isDelError ? "errmsg" : "offscreen"
 
@@ -124,6 +129,14 @@ const EditIssueForm = ({ users, issue }) => {
     : ""
 
   const validSubmitterClass = !Boolean(submitter.length)
+    ? "form__input--incomplete"
+    : ""
+
+  const validTypeClass = !Boolean(type.toString().length)
+    ? "form__input--incomplete"
+    : ""
+
+  const validStatusClass = !Boolean(status.toString().length)
     ? "form__input--incomplete"
     : ""
 
@@ -191,7 +204,7 @@ const EditIssueForm = ({ users, issue }) => {
           Status:
         </label>
         <select
-          className={"form__select"}
+          className={`form__select ${validStatusClass}`}
           id="status"
           name="status"
           value={status}
@@ -230,7 +243,7 @@ const EditIssueForm = ({ users, issue }) => {
           Type:
         </label>
         <select
-          className={"form__select"}
+          className={`form__select ${validTypeClass}`}
           id="type"
           name="type"
           value={type}
