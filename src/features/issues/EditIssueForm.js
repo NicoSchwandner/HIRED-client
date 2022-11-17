@@ -187,6 +187,8 @@ const EditIssueForm = ({ users, issue }) => {
           onChange={onTitleChanged}
         />
 
+        <p className="form__id">ID: {issue.id}</p>
+
         <label className="form__label" htmlFor="description">
           Description:
         </label>
