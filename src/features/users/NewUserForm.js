@@ -21,7 +21,7 @@ const NewUserForm = () => {
   const [validUsername, setValidUsername] = useState(false)
   const [password, setPassword] = useState("")
   const [validPassword, setValidPassword] = useState(false)
-  const [roles, setRoles] = useState([ROLES.Developer])
+  const [checkedRoles, setCheckedRoles] = useState([ROLES.Developer])
 
   useEffect(() => {
     setValidUsername(USER_REGEX.test(username))
@@ -35,44 +35,52 @@ const NewUserForm = () => {
     if (isSuccess) {
       setUsername("")
       setPassword("")
-      setRoles([])
+      setCheckedRoles([])
       navigate("/dash/users")
     }
   }, [isSuccess, navigate])
 
   const onUsernameChanged = (e) => setUsername(e.target.value)
   const onPasswordChanged = (e) => setPassword(e.target.value)
+  const onCheckedRolesChanged = (role) => {
+    // Remove role from array if role was checked before, add role, if it wasn't
+    const updatedRoles = checkedRoles.includes(role)
+      ? checkedRoles.filter((roleItem) => roleItem !== role)
+      : [...checkedRoles, role]
 
-  const onRolesChanged = (e) => {
-    const values = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    )
-    setRoles(values)
+    setCheckedRoles(updatedRoles)
   }
 
   const canSave =
-    [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
+    [checkedRoles.length, validUsername, validPassword].every(Boolean) &&
+    !isLoading
 
   const onSaveUserClicked = async (e) => {
     e.preventDefault()
     if (canSave) {
-      await addNewUser({ username, password, roles })
+      await addNewUser({ username, password, roles: checkedRoles })
     }
   }
 
-  const options = Object.values(ROLES).map((role) => {
+  const roleOptions = Object.values(ROLES).map((role) => {
     return (
-      <option key={role} value={role} label={ROLES_NR2STR[role]}>
-        {role}
-      </option>
+      <label key={role} className={"form__input--checkboxes"}>
+        <input
+          type="checkbox"
+          className="form__checkbox"
+          onChange={() => onCheckedRolesChanged(role)}
+          checked={checkedRoles.includes(role)}
+        />
+        <span> {ROLES_NR2STR[role]}</span>
+        <br />
+      </label>
     )
   })
 
   const errClass = isError ? "errmsg" : "offscreen"
   const validUserClass = !validUsername ? "form__input--incomplete" : ""
   const validPwdClass = !validPassword ? "form__input--incomplete" : ""
-  const validRolesClass = !Boolean(roles.length)
+  const validRolesClass = !Boolean(checkedRoles.length)
     ? "form__input--incomplete"
     : ""
 
@@ -115,20 +123,12 @@ const NewUserForm = () => {
           onChange={onPasswordChanged}
         />
 
-        <label className="form__label" htmlFor="roles">
+        <legend className="form__label" htmlFor="roles">
           Assgined Roles:
-        </label>
-        <select
-          className={`form__input ${validRolesClass}`}
-          id="roles"
-          name="roles"
-          multiple={true}
-          size="3"
-          value={roles}
-          onChange={onRolesChanged}
-        >
-          {options}
-        </select>
+        </legend>
+        <div className={`form__input ${validRolesClass}`} id="rolesCheckboxes">
+          {roleOptions}
+        </div>
       </form>
     </>
   )

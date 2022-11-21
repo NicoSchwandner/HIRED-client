@@ -22,7 +22,7 @@ const EditUserForm = ({ user }) => {
   const [validUsername, setValidUsername] = useState(false)
   const [password, setPassword] = useState("")
   const [validPassword, setValidPassword] = useState(false)
-  const [roles, setRoles] = useState(user.roles)
+  const [checkedRoles, setCheckedRoles] = useState(user.roles)
   const [active, setActive] = useState(user.active)
 
   useEffect(() => {
@@ -37,29 +37,35 @@ const EditUserForm = ({ user }) => {
     if (isSuccess || isDelSuccess) {
       setUsername("")
       setPassword("")
-      setRoles([])
+      setCheckedRoles([])
       navigate("/dash/users")
     }
   }, [isSuccess, isDelSuccess, navigate])
 
   const onUsernameChanged = (e) => setUsername(e.target.value)
   const onPasswordChanged = (e) => setPassword(e.target.value)
+  const onCheckedRolesChanged = (role) => {
+    // Remove role from array if role was checked before, add role, if it wasn't
+    const updatedRoles = checkedRoles.includes(role)
+      ? checkedRoles.filter((roleItem) => roleItem !== role)
+      : [...checkedRoles, role]
 
-  const onRolesChanged = (e) => {
-    const values = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    )
-    setRoles(values)
+    setCheckedRoles(updatedRoles)
   }
 
   const onActiveChanged = () => setActive((prev) => !prev)
 
   const onSaveUserClicked = async (e) => {
     if (password) {
-      await updateUser({ id: user.id, username, password, roles, active })
+      await updateUser({
+        id: user.id,
+        username,
+        password,
+        roles: checkedRoles,
+        active,
+      })
     } else {
-      await updateUser({ id: user.id, username, roles, active })
+      await updateUser({ id: user.id, username, roles: checkedRoles, active })
     }
   }
 
@@ -67,28 +73,35 @@ const EditUserForm = ({ user }) => {
     await deleteUser({ id: user.id })
   }
 
-  // const options = Object.values(ROLES_NR2STR).map((role) => {
-  const options = Object.values(ROLES).map((role) => {
+  const roleOptions = Object.values(ROLES).map((role) => {
     return (
-      <option key={role} value={role} label={ROLES_NR2STR[role]}>
-        {role}
-      </option>
+      <label key={role} className={"form__input--checkboxes"}>
+        <input
+          type="checkbox"
+          className="form__checkbox"
+          onChange={() => onCheckedRolesChanged(role)}
+          checked={checkedRoles.includes(role)}
+        />
+        <span> {ROLES_NR2STR[role]}</span>
+        <br />
+      </label>
     )
   })
 
   let canSave
   if (password) {
     canSave =
-      [roles.length, validUsername, validPassword].every(Boolean) && !isLoading
+      [checkedRoles.length, validUsername, validPassword].every(Boolean) &&
+      !isLoading
   } else {
-    canSave = [roles.length, validUsername].every(Boolean) && !isLoading
+    canSave = [checkedRoles.length, validUsername].every(Boolean) && !isLoading
   }
 
   const errClass = isError || isDelError ? "errmsg" : "offscreen"
   const validUserClass = !validUsername ? "form__input--incomplete" : ""
   const validPwdClass =
     password && !validPassword ? "form__input--incomplete" : ""
-  const validRolesClass = !Boolean(roles.length)
+  const validRolesClass = !Boolean(checkedRoles.length)
     ? "form__input--incomplete"
     : ""
 
@@ -160,20 +173,12 @@ const EditUserForm = ({ user }) => {
           onChange={onActiveChanged}
         />
 
-        <label className="form__label" htmlFor="roles">
+        <legend className="form__label" htmlFor="roles">
           Assgined Roles:
-        </label>
-        <select
-          className={`form__input ${validRolesClass}`}
-          id="roles"
-          name="roles"
-          multiple={true}
-          size="3"
-          value={roles}
-          onChange={onRolesChanged}
-        >
-          {options}
-        </select>
+        </legend>
+        <div className={`form__input ${validRolesClass}`} id="rolesCheckboxes">
+          {roleOptions}
+        </div>
       </form>
     </>
   )
