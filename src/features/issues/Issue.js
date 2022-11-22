@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useGetIssuesQuery } from "./issuesApiSlice"
 import { memo } from "react"
 
@@ -45,6 +45,11 @@ const Issue = ({ issueId }) => {
 
     return (
       <tr className="table__row issue">
+        <td className={"table__cell issue__title"}>
+          <Link to={`/dash/issues/${issueId}`}>
+            {issue.title ? issue.title : ""}
+          </Link>
+        </td>
         <td className={"table__cell issue__status"}>
           {" "}
           <span className={`issue__status${issueStatusClassSuffix}`}>
@@ -53,16 +58,13 @@ const Issue = ({ issueId }) => {
               : issue.status}
           </span>
         </td>
-        <td className={"table__cell issue__created"}>{created}</td>
-        {/* <td className={"table__cell issue__updated"}>{updated}</td> */}
-        <td className={"table__cell issue__title"}>
-          {issue.title ? issue.title : ""}
-        </td>
         <td className={"table__cell issue__type"}>
           {ISSUE_TYPE_NR2STR[issue.type]
             ? ISSUE_TYPE_NR2STR[issue.type]
             : issue.type}
         </td>
+        <td className={"table__cell issue__created"}>{created}</td>
+        {/* <td className={"table__cell issue__updated"}>{updated}</td> */}
         <td className={"table__cell issue__username"}>
           {issue.assignedTo?.username ? issue.assignedTo?.username : ""}
         </td>

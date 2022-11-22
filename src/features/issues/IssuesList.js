@@ -80,20 +80,20 @@ const IssuesList = () => {
       <table className="table table--issues">
         <thead className="table__thead">
           <tr>
+            <th scope="col" className="table__th issue__title">
+              Title
+            </th>
             <th scope="col" className="table__th issue__status">
               Status
-            </th>
-            <th scope="col" className="table__th issue__created">
-              Created
             </th>
             {/*<th scope="col" className="table__th issue__updated">
               Updated
             </th>*/}
-            <th scope="col" className="table__th issue__title">
-              Title
-            </th>
             <th scope="col" className="table__th issue__type">
               Type
+            </th>
+            <th scope="col" className="table__th issue__created">
+              Created
             </th>
             <th scope="col" className="table__th issue__username">
               Assigned to
