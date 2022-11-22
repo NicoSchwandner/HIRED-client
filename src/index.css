@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 * {
   margin: 0;
@@ -10,7 +11,21 @@
 
 :root {
   /* COLORS */
-  --BGCOLOR: #0f172a;
+  --BGCOLOR: #fffffa;
+  --BORDER-COLOR: #3b416d;
+  --COLOR: #3b416d;
+  --ERROR: rgb(151 54 52);
+  --INACTIVE: lightgray;
+  --LINK-COLOR: #3b416d;
+  --LINK-HOVER: hsl(233deg 30% 50%);
+  --ISSUE-BGCOLOR: hsla(240, 64%, 27%, 0.65);
+  --STATUS-DONE: #067856;
+  --STATUS-IN-PROGRESS: #3b416d;
+  --STATUS-NOT-STARTED: rgb(151 54 52);
+  --TABLE-BGCOLOR: #fffffa;
+  --TABLE-COLOR: #3b416d;
+
+  /* --BGCOLOR: #0f172a;
   --BORDER-COLOR: #fff;
   --COLOR: #fff;
   --ERROR: firebrick;
@@ -22,7 +37,7 @@
   --STATUS-IN-PROGRESS: rgb(0, 0, 0);
   --STATUS-NOT-STARTED: rgb(164, 61, 61);
   --TABLE-BGCOLOR: #fff;
-  --TABLE-COLOR: #000;
+  --TABLE-COLOR: #000; */
 }
 
 /* || UTILITY CLASSES */
@@ -66,11 +81,11 @@
 /* || GENERAL STYLES */
 
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: "Poppins", sans-serif;
   min-height: 100vh;
   background-color: var(--BGCOLOR);
   color: var(--COLOR);
-  background-image: url("./img/background.jpg");
+  /* background-image: url("./img/background.jpg"); */
   background-size: cover;
   background-position: top right;
   background-blend-mode: multiply;
