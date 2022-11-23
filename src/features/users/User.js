@@ -27,15 +27,13 @@ const User = ({ userId }) => {
       .toString()
       .replaceAll(",", ", ")
 
-    const cellStatus = user.active ? "" : "table__cell--inactive"
-
     return (
       <tr className="table__row user">
-        <td className={`table__cell ${cellStatus}`}>
+        <td className={"table__cell"}>
           <Link to={`/dash/users/${userId}`}>{user.username}</Link>
         </td>
-        <td className={`table__cell ${cellStatus}`}>{userRolesString}</td>
-        <td className={`table__cell ${cellStatus}`}>
+        <td className={"table__cell"}>{userRolesString}</td>
+        <td className={"table__cell"}>
           <button className="icon-button table__button" onClick={handleEdit}>
             <FontAwesomeIcon icon={faPenToSquare} />
           </button>

@@ -64,16 +64,18 @@ const NewUserForm = () => {
 
   const roleOptions = Object.values(ROLES).map((role) => {
     return (
-      <label key={role} className={"form__input--checkboxes"}>
-        <input
-          type="checkbox"
-          className="form__checkbox"
-          onChange={() => onCheckedRolesChanged(role)}
-          checked={checkedRoles.includes(role)}
-        />
+      <div className="form__input--toggle-wrapper">
+        <label key={role} className={"form__input--checkboxes"}>
+          <input
+            type="checkbox"
+            className="form__checkbox"
+            onChange={() => onCheckedRolesChanged(role)}
+            checked={checkedRoles.includes(role)}
+          />
+          <span class="slider round"></span>
+        </label>
         <span> {ROLES_NR2STR[role]}</span>
-        <br />
-      </label>
+      </div>
     )
   })
 
@@ -88,14 +90,9 @@ const NewUserForm = () => {
     <>
       <p className={errClass}>{error?.data?.message}</p>
 
-      <form className="form" onSubmit={onSaveUserClicked}>
+      <form className="form" onSubmit={(e) => e.preventDefault()}>
         <div className="form__title-row">
           <h2>New User</h2>
-          <div className="form__action-buttons">
-            <button className="icon-button" title="Save" disabled={!canSave}>
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-          </div>
         </div>
         <label className="form__label" htmlFor="username">
           Username: <span className="nowrap">[3-20 letters]</span>
@@ -126,8 +123,22 @@ const NewUserForm = () => {
         <legend className="form__label" htmlFor="roles">
           Assgined Roles:
         </legend>
-        <div className={`form__input ${validRolesClass}`} id="rolesCheckboxes">
+        <div
+          className={`form__input ${validRolesClass} form__input--roles-checkboxes`}
+          id="rolesCheckboxes"
+        >
           {roleOptions}
+        </div>
+
+        <div className="form__action-buttons">
+          <button
+            className="icon-button--action"
+            title="Save"
+            disabled={!canSave}
+            onClick={onSaveUserClicked}
+          >
+            <FontAwesomeIcon icon={faSave} className="icon-button--icon" /> Save
+          </button>
         </div>
       </form>
     </>

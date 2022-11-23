@@ -23,7 +23,6 @@ const EditUserForm = ({ user }) => {
   const [password, setPassword] = useState("")
   const [validPassword, setValidPassword] = useState(false)
   const [checkedRoles, setCheckedRoles] = useState(user.roles)
-  const [active, setActive] = useState(user.active)
 
   useEffect(() => {
     setValidUsername(USER_REGEX.test(username))
@@ -53,8 +52,6 @@ const EditUserForm = ({ user }) => {
     setCheckedRoles(updatedRoles)
   }
 
-  const onActiveChanged = () => setActive((prev) => !prev)
-
   const onSaveUserClicked = async (e) => {
     if (password) {
       await updateUser({
@@ -62,10 +59,13 @@ const EditUserForm = ({ user }) => {
         username,
         password,
         roles: checkedRoles,
-        active,
       })
     } else {
-      await updateUser({ id: user.id, username, roles: checkedRoles, active })
+      await updateUser({
+        id: user.id,
+        username,
+        roles: checkedRoles,
+      })
     }
   }
 
@@ -75,16 +75,18 @@ const EditUserForm = ({ user }) => {
 
   const roleOptions = Object.values(ROLES).map((role) => {
     return (
-      <label key={role} className={"form__input--checkboxes"}>
-        <input
-          type="checkbox"
-          className="form__checkbox"
-          onChange={() => onCheckedRolesChanged(role)}
-          checked={checkedRoles.includes(role)}
-        />
+      <div className="form__input--toggle-wrapper">
+        <label key={role} className={"form__input--checkboxes"}>
+          <input
+            type="checkbox"
+            className="form__checkbox"
+            onChange={() => onCheckedRolesChanged(role)}
+            checked={checkedRoles.includes(role)}
+          />
+          <span class="slider round"></span>
+        </label>
         <span> {ROLES_NR2STR[role]}</span>
-        <br />
-      </label>
+      </div>
     )
   })
 
@@ -114,23 +116,6 @@ const EditUserForm = ({ user }) => {
       <form className="form" onSubmit={(e) => e.preventDefault()}>
         <div className="form__title-row">
           <h2>Edit User</h2>
-          <div className="form__action-buttons">
-            <button
-              className="icon-button"
-              title="Save"
-              disabled={!canSave}
-              onClick={onSaveUserClicked}
-            >
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-            <button
-              className="icon-button"
-              title="Delete"
-              onClick={onDeleteUserClicked}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </button>
-          </div>
         </div>
         <label className="form__label" htmlFor="username">
           Username: <span className="nowrap">[3-20 letters]</span>
@@ -158,26 +143,33 @@ const EditUserForm = ({ user }) => {
           onChange={onPasswordChanged}
         />
 
-        <label
-          className="form__label form__checkbox-container"
-          htmlFor="user-active"
-        >
-          Active:
-        </label>
-        <input
-          className={"form__checkbox"}
-          id="user-active"
-          name="user-active"
-          type="checkbox"
-          checked={active}
-          onChange={onActiveChanged}
-        />
-
         <legend className="form__label" htmlFor="roles">
           Assgined Roles:
         </legend>
-        <div className={`form__input ${validRolesClass}`} id="rolesCheckboxes">
+        <div
+          className={`form__input ${validRolesClass} form__input--roles-checkboxes`}
+          id="rolesCheckboxes"
+        >
           {roleOptions}
+        </div>
+
+        <div className="form__action-buttons">
+          <button
+            className="icon-button--action"
+            title="Save"
+            disabled={!canSave}
+            onClick={onSaveUserClicked}
+          >
+            <FontAwesomeIcon icon={faSave} className="icon-button--icon" /> Save
+          </button>
+          <button
+            className="icon-button--remove"
+            title="Delete"
+            onClick={onDeleteUserClicked}
+          >
+            <FontAwesomeIcon icon={faTrashCan} className="icon-button--icon" />{" "}
+            Delete
+          </button>
         </div>
       </form>
     </>

@@ -99,11 +99,6 @@ const NewIssueForm = ({ users }) => {
       <form className="form" onSubmit={onSaveIssueClicked}>
         <div className="form__title-row">
           <h2>New Issue</h2>
-          <div className="form__action-buttons">
-            <button className="icon-button" title="Save" disabled={!canSave}>
-              <FontAwesomeIcon icon={faSave} />
-            </button>
-          </div>
         </div>
         <label className="form__label" htmlFor="title">
           Title:
@@ -131,44 +126,70 @@ const NewIssueForm = ({ users }) => {
           onChange={onDescriptionChanged}
         />
 
-        <label className="form__label" htmlFor="assignedTo">
-          Assgined to:
-        </label>
-        <select
-          className={`form__select ${validAssignedToClass}`}
-          id="assignedTo"
-          name="assignedTo"
-          value={assignedTo}
-          onChange={onAssignedToChanged}
-        >
-          {userOptions}
-        </select>
+        <div className="form__wrapper">
+          <div className="form__wrapper--child">
+            <label className="form__label form__label--wrapper" htmlFor="type">
+              Type:
+            </label>
+            <select
+              className={`form__select ${validTypeClass}`}
+              id="type"
+              name="type"
+              value={type}
+              onChange={onTypeChanged}
+            >
+              {typeOptions}
+            </select>
+          </div>
+        </div>
 
-        <label className="form__label" htmlFor="submitter">
-          Submitter:
-        </label>
-        <select
-          className={`form__select ${validSubmitterClass}`}
-          id="submitter"
-          name="submitter"
-          value={submitter}
-          onChange={onSubmitterChanged}
-        >
-          {userOptions}
-        </select>
+        <div className="form__wrapper">
+          <div className="form__wrapper--child">
+            <label
+              className="form__label form__label--wrapper"
+              htmlFor="assignedTo"
+            >
+              Assgined to:
+            </label>
+            <select
+              className={`form__select ${validAssignedToClass}`}
+              id="assignedTo"
+              name="assignedTo"
+              value={assignedTo}
+              onChange={onAssignedToChanged}
+            >
+              {userOptions}
+            </select>
+          </div>
 
-        <label className="form__label" htmlFor="type">
-          Type:
-        </label>
-        <select
-          className={`form__select ${validTypeClass}`}
-          id="type"
-          name="type"
-          value={type}
-          onChange={onTypeChanged}
-        >
-          {typeOptions}
-        </select>
+          <div className="form__wrapper--child">
+            <label
+              className="form__label form__label--wrapper"
+              htmlFor="submitter"
+            >
+              Submitter:
+            </label>
+            <select
+              className={`form__select ${validSubmitterClass}`}
+              id="submitter"
+              name="submitter"
+              value={submitter}
+              onChange={onSubmitterChanged}
+            >
+              {userOptions}
+            </select>
+          </div>
+        </div>
+
+        <div className="form__action-buttons">
+          <button
+            className="icon-button--action"
+            title="Save"
+            disabled={!canSave}
+          >
+            <FontAwesomeIcon icon={faSave} className="icon-button--icon" /> Save
+          </button>
+        </div>
       </form>
     </>
   )
