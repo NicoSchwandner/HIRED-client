@@ -1,7 +1,7 @@
 const ISSUE_STATUS_NR2STR = {
-  0: "Not started",
-  1: "In progress",
-  2: "Done",
+  0: "❌ Not started",
+  1: "▶️ In progress",
+  2: "✅ Done",
 }
 
 const ISSUE_STATUS = {

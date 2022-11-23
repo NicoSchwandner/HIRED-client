@@ -1,8 +1,8 @@
 const ISSUE_TYPE_NR2STR = {
-  0: "Feature",
-  1: "Bug",
-  2: "Question",
-  3: "Enhancement",
+  0: "🌟 Feature",
+  1: "🐞 Bug",
+  2: "❓ Question",
+  3: "🛠️ Enhancement",
 }
 
 const ISSUE_TYPE = {
