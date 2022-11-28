@@ -2,7 +2,8 @@ import { useEffect } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faFileCirclePlus,
-  faFilePen,
+  faFileLines,
+  // faFilePen,
   faUserGear,
   faUserPlus,
   faRightFromBracket,
@@ -56,7 +57,7 @@ const DashHeader = () => {
   if (!ISSUES_REGEX.test(pathname) && pathname.includes("/dash")) {
     issueButton = (
       <button className="icon-button" title="Issues" onClick={onIssuesClicked}>
-        <FontAwesomeIcon icon={faFilePen} />
+        <FontAwesomeIcon icon={faFileLines} />
       </button>
     )
   }

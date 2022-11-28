@@ -1,4 +1,5 @@
-import ErrorIcon from "@mui/icons-material/Error"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons"
 
 const ErrorMessage = ({ errMsg, errRef, errClass, ariaLive }) => {
   return (
@@ -7,7 +8,7 @@ const ErrorMessage = ({ errMsg, errRef, errClass, ariaLive }) => {
       className={errClass}
       aria-live={ariaLive ? ariaLive : "none"}
     >
-      <ErrorIcon />
+      <FontAwesomeIcon icon={faCircleExclamation} />
       {errMsg}
     </p>
   )
