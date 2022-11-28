@@ -33,7 +33,7 @@ const EditIssue = () => {
     )
 
   if (!isSubmitter && !isAdmin) {
-    if (issue.assignedTo !== userId) {
+    if (issue.assignedTo._id !== userId) {
       return <ErrorMessage errMsg="No access" errClass="errmsg" />
     }
   }
