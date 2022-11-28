@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { ROLES, ROLES_NR2STR } from "../../config/roles"
+import ErrorMessage from "../../components/ErrorMessage"
 
 const USER_REGEX = /^[A-z]{3,20}$/
 const PWD_REGEX = /^[A-z0-9!@#$%.:_]{8,64}$/
@@ -111,7 +112,7 @@ const EditUserForm = ({ user }) => {
 
   const content = (
     <>
-      <p className={errClass}>{errContent}</p>
+      <ErrorMessage errMsg={errContent} errClass={errClass} />
 
       <form className="form" onSubmit={(e) => e.preventDefault()}>
         <div className="form__title-row">

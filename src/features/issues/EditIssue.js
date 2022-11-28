@@ -5,6 +5,7 @@ import { useGetUsersQuery } from "../users/usersApiSlice"
 import useAuth from "../../hooks/useAuth"
 import PulseLoader from "react-spinners/PulseLoader"
 import useTitle from "../../hooks/useTitle"
+import ErrorMessage from "../../components/ErrorMessage"
 
 const EditIssue = () => {
   useTitle("Edit Issue - HIRED Issue Tracker")
@@ -28,7 +29,7 @@ const EditIssue = () => {
 
   if (!isSubmitter && !isAdmin) {
     if (issue.assignedTo !== userId) {
-      return <p className="errmsg">No access</p>
+      return <ErrorMessage errMsg="No access" errClass="errmsg" />
     }
   }
 

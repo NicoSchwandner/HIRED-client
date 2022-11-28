@@ -11,6 +11,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom"
 
 import { useSendLogoutMutation } from "../features/auth/authApiSlice"
 import useAuth from "../hooks/useAuth"
+import ErrorMessage from "./ErrorMessage"
 
 const DASH_REGEX = /^\/dash(\/)?$/
 const ISSUES_REGEX = /^\/dash\/issues(\/)?$/
@@ -122,7 +123,7 @@ const DashHeader = () => {
 
   const content = (
     <>
-      <p className={errClass}>{error?.data?.message}</p>
+      <ErrorMessage errMsg={error?.data?.message} errClass={errClass} />
       <header className="dash-header">
         <div className={`dash-header__container ${dashClass}`}>
           <Link to="/dash">

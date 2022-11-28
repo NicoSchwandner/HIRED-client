@@ -2,6 +2,7 @@ import { useGetUsersQuery } from "./usersApiSlice"
 import User from "./User"
 import PulseLoader from "react-spinners/PulseLoader"
 import useTitle from "../../hooks/useTitle"
+import ErrorMessage from "../../components/ErrorMessage"
 
 const UsersList = () => {
   useTitle("Users - HIRED Issue Tracker")
@@ -23,7 +24,7 @@ const UsersList = () => {
   if (isLoading) content = <PulseLoader color={"#FFF"} />
 
   if (isError) {
-    content = <p className="errmsg">{error?.data?.message}</p>
+    content = <ErrorMessage errMsg={error?.data?.message} errClass="errmsg" />
     // console.error(error);
     // console.error(error?.data);
     console.error(error?.data?.message)

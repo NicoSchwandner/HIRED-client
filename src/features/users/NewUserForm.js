@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSave } from "@fortawesome/free-solid-svg-icons"
 import { ROLES, ROLES_NR2STR } from "../../config/roles"
 import useTitle from "../../hooks/useTitle"
+import ErrorMessage from "../../components/ErrorMessage"
 
 const USER_REGEX = /^[A-z]{3,20}$/
 const PWD_REGEX = /^[A-z0-9!@#$%.:_]{8,64}$/
@@ -88,7 +89,7 @@ const NewUserForm = () => {
 
   const content = (
     <>
-      <p className={errClass}>{error?.data?.message}</p>
+      <ErrorMessage errMsg={error?.data?.message} errClass={errClass} />
 
       <form className="form" onSubmit={(e) => e.preventDefault()}>
         <div className="form__title-row">

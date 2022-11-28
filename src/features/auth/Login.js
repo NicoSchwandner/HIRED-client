@@ -6,6 +6,7 @@ import { useLoginMutation } from "./authApiSlice"
 import usePersist from "../../hooks/usePersist"
 import PulseLoader from "react-spinners/PulseLoader"
 import useTitle from "../../hooks/useTitle"
+import ErrorMessage from "../../components/ErrorMessage"
 
 const Login = () => {
   useTitle("Login - HIRED Issue Tracker")
@@ -65,9 +66,12 @@ const Login = () => {
         <h1>Employee Login</h1>
       </theader>
       <main className="login">
-        <p ref={errRef} className={errClass} aria-live="assertive">
-          {errMsg}
-        </p>
+        <ErrorMessage
+          ref={errRef}
+          ariaLive="assertive"
+          errMsg={errMsg}
+          errClass={errClass}
+        />
 
         <form className="form" onSubmit={handleSubmit}>
           <label htmlFor="username">Username:</label>

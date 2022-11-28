@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth"
 import PulseLoader from "react-spinners/PulseLoader"
 import useTitle from "../../hooks/useTitle"
 import { ISSUE_STATUS } from "../../config/issue_status"
+import ErrorMessage from "../../components/ErrorMessage"
 
 const IssuesList = () => {
   useTitle("Issues - HIRED Issue Tracker")
@@ -26,7 +27,7 @@ const IssuesList = () => {
   if (isLoading) content = <PulseLoader color={"#FFF"} />
 
   if (isError) {
-    content = <p className="errmsg">{error?.data?.message}</p>
+    content = <ErrorMessage errMsg={error?.data?.message} errClass="errmsg" />
     // console.error(error);
     // console.error(error?.data);
     console.error(error?.data?.message)

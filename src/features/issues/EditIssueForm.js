@@ -9,6 +9,7 @@ import { faSave, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { ISSUE_STATUS, ISSUE_STATUS_NR2STR } from "../../config/issue_status"
 import { ISSUE_TYPE, ISSUE_TYPE_NR2STR } from "../../config/issue_type"
 import useAuth from "../../hooks/useAuth"
+import ErrorMessage from "../../components/ErrorMessage"
 
 const EditIssueForm = ({ users, issue }) => {
   const { isSubmitter, isAdmin } = useAuth()
@@ -157,7 +158,7 @@ const EditIssueForm = ({ users, issue }) => {
 
   const content = (
     <>
-      <p className={errClass}>{errContent}</p>
+      <ErrorMessage errMsg={errContent} errClass={errClass} />
 
       <form className="form" onSubmit={(e) => e.preventDefault()}>
         <div className="form__title-row">

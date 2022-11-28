@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSave } from "@fortawesome/free-solid-svg-icons"
 import { ISSUE_TYPE, ISSUE_TYPE_NR2STR } from "../../config/issue_type"
 import useAuth from "../../hooks/useAuth"
+import ErrorMessage from "../../components/ErrorMessage"
 
 const NewIssueForm = ({ users }) => {
   const { userId } = useAuth()
@@ -94,7 +95,7 @@ const NewIssueForm = ({ users }) => {
 
   const content = (
     <>
-      <p className={errClass}>{error?.data?.message}</p>
+      <ErrorMessage errMsg={error?.data?.message} errClass={errClass} />
 
       <form className="form" onSubmit={onSaveIssueClicked}>
         <div className="form__title-row">

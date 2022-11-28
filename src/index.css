@@ -41,13 +41,20 @@
 }
 
 /* || UTILITY CLASSES */
+p.offscreen {
+  display: none;
+}
+
 .errmsg {
-  display: inline-block;
   background-color: var(--TABLE-BGCOLOR);
   color: var(--ERROR);
   padding: 0.25em;
   margin-bottom: 0.5em;
   outline: 2px solid var(--ERROR);
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .errmsg a:any-link {
@@ -63,7 +70,7 @@
   width: 2rem;
   height: 2rem;
   font-size: 1;
-  background-color: transparent;
+  background-color: var(--BGCOLOR);
   border: none;
   color: var(--COLOR);
   display: grid;
@@ -86,12 +93,12 @@
 
 .icon-button--remove {
   font-size: 1rem;
-  background-color: var(--ERROR);
-  color: var(--BGCOLOR);
+  border-color: var(--ERROR);
+  background-color: var(--BGCOLOR);
+  color: var(--ERROR);
   cursor: pointer;
-  /* border-color: var(--BGCOLOR); */
-  border-style: none;
-  border-radius: 2rem;
+  border-style: solid;
+  border-radius: 15px;
   padding-inline: 1rem;
   width: fit-content;
   height: 2.5rem;
@@ -100,9 +107,8 @@
 
 .icon-button--remove:hover,
 .icon-button--remove:focus-visible {
-  background-color: var(--BGCOLOR);
-  color: var(--ERROR);
-  border-color: var(--ERROR);
+  background-color: var(--ERROR);
+  color: var(--BGCOLOR);
   border-style: solid;
 }
 
@@ -110,16 +116,17 @@
   cursor: not-allowed;
   background-color: var(--INACTIVE);
   color: var(--GCOLOR);
+  border-color: var(--INACTIVE);
 }
 
 .icon-button--action {
   font-size: 1rem;
-  background-color: transparent;
-  color: var(--COLOR);
   cursor: pointer;
+  background-color: var(--COLOR);
+  color: var(--BGCOLOR);
   border-color: var(--COLOR);
   border-style: solid;
-  border-radius: 2rem;
+  border-radius: 15px;
   padding-inline: 1rem;
   width: fit-content;
   height: 2.5rem;
@@ -128,14 +135,15 @@
 
 .icon-button--action:hover,
 .icon-button--action:focus-visible {
-  background-color: var(--COLOR);
-  color: var(--BGCOLOR);
+  background-color: var(--BGCOLOR);
+  color: var(--COLOR);
 }
 
 .icon-button--action[disabled] {
   cursor: not-allowed;
   background-color: var(--INACTIVE);
-  color: var(--GCOLOR);
+  color: var(--BGCOLOR);
+  border-color: var(--INACTIVE);
 }
 
 /* || GENERAL STYLES */
@@ -401,6 +409,24 @@ tr {
   border-radius: 15px;
   border: solid;
   border-color: var(--COLOR);
+}
+
+.form__submit-button {
+  cursor: pointer;
+  background-color: var(--BGCOLOR);
+  color: var(--COLOR);
+}
+
+.form__submit-button:hover,
+.form__submit-button:focus-visible {
+  background-color: var(--COLOR);
+  color: var(--BGCOLOR);
+}
+
+.form__submit-button[disabled] {
+  cursor: not-allowed;
+  background-color: var(--INACTIVE);
+  color: var(--GCOLOR);
 }
 
 .form__input--text {
