@@ -48,7 +48,11 @@ const PersistLogin = () => {
     content = <Outlet />
   } else if (isLoading) {
     console.log("Loading")
-    content = <PulseLoader color={"#FFF"} />
+    content = (
+      <p className="loading-animation-wrapper">
+        <PulseLoader color={"var(--COLOR)"} className="loading-animation" />
+      </p>
+    )
   } else if (isError) {
     console.log("Error")
     content = (

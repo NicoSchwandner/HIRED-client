@@ -11,7 +11,12 @@ const NewIssue = () => {
     }),
   })
 
-  if (!users?.length) return <PulseLoader color={"#FFF"} />
+  if (!users?.length)
+    return (
+      <p className="loading-animation-wrapper">
+        <PulseLoader color={"var(--COLOR)"} className="loading-animation" />
+      </p>
+    )
 
   const content = <NewIssueForm users={users} />
 

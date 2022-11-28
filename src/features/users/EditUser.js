@@ -18,7 +18,9 @@ const EditUser = () => {
   const content = user ? (
     <EditUserForm user={user} />
   ) : (
-    <PulseLoader color={"#FFF"} />
+    <p className="loading-animation-wrapper">
+      <PulseLoader color={"var(--COLOR)"} className="loading-animation" />
+    </p>
   )
 
   return content

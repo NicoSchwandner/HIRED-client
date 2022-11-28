@@ -25,7 +25,12 @@ const EditIssue = () => {
     }),
   })
 
-  if (!issue || !users?.length) return <PulseLoader color={"#FFF"} />
+  if (!issue || !users?.length)
+    return (
+      <p className="loading-animation-wrapper">
+        <PulseLoader color={"var(--COLOR)"} className="loading-animation" />
+      </p>
+    )
 
   if (!isSubmitter && !isAdmin) {
     if (issue.assignedTo !== userId) {

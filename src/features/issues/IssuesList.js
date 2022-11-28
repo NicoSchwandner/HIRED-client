@@ -24,7 +24,12 @@ const IssuesList = () => {
 
   let content
 
-  if (isLoading) content = <PulseLoader color={"#FFF"} />
+  if (isLoading)
+    content = (
+      <p className="loading-animation-wrapper">
+        <PulseLoader color={"var(--COLOR)"} className="loading-animation" />
+      </p>
+    )
 
   if (isError) {
     content = <ErrorMessage errMsg={error?.data?.message} errClass="errmsg" />
