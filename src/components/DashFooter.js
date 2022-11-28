@@ -5,11 +5,24 @@ import useAuth from "../hooks/useAuth"
 import { ROLES_NR2STR } from "../config/roles"
 
 const DashFooter = () => {
-  const { username, highestStatus } = useAuth()
+  const { username, roles } = useAuth()
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
   const onGoHomeClicked = () => navigate("/dash")
+
+  let currentStatus = ""
+  if (roles.length) {
+    roles.forEach(buildRoleString)
+
+    function buildRoleString(value, index, array) {
+      currentStatus += ROLES_NR2STR[value] + ", "
+    }
+
+    currentStatus = currentStatus.slice(0, currentStatus.length - 2)
+  } else {
+    currentStatus = "undefined"
+  }
 
   let goHomeButton = null
   if (pathname !== "/dash") {
@@ -28,12 +41,7 @@ const DashFooter = () => {
     <footer className="dash-footer">
       {goHomeButton}
       <p>Current User: {username}</p>
-      <p>
-        Highest Status:{" "}
-        {ROLES_NR2STR[highestStatus]
-          ? ROLES_NR2STR[highestStatus]
-          : highestStatus}
-      </p>
+      <p>Current Status: {currentStatus}</p>
     </footer>
   )
 
