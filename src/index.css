@@ -377,6 +377,7 @@ tr {
   margin-bottom: 0.25em;
   display: flex;
   flex-grow: 1;
+  align-items: center;
 }
 
 .form__label--wrapper {
