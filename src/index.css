@@ -142,7 +142,6 @@ p.offscreen {
 
 body {
   font-family: "Poppins", sans-serif;
-  /* min-height: 100vh; */
   min-height: 100%;
   height: 100%;
   background-color: var(--BGCOLOR);
@@ -162,7 +161,6 @@ select {
 
 #root {
   /* React root div */
-  /* min-height: 100vh; */
   min-height: 100%;
   height: 100%;
   display: flex;
@@ -223,6 +221,7 @@ a:focus-visible {
   background-color: var(--BGCOLOR);
   padding: 0 0.5em;
   border-bottom: 2px solid var(--BORDER-COLOR);
+  flex: 0;
 }
 
 .dash-header__container {
@@ -242,11 +241,11 @@ a:focus-visible {
 .dash-container {
   padding: 0.75em 0.5em 0.5em;
   flex-grow: 1;
+  overflow-y: auto;
 }
 
 .dash-footer {
   font-size: 1rem;
-  /* position: sticky; */
   bottom: 0;
   z-index: 1;
   background-color: var(--BGCOLOR);
@@ -257,8 +256,9 @@ a:focus-visible {
   justify-content: flex-start;
   gap: 1em;
   align-items: center;
-  position: fixed;
-  /* bottom: 10px; */
+  width: 100%;
+  flex: 0;
+  min-height: fit-content;
 }
 
 .dash-footer__button {
