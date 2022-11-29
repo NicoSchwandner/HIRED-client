@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom"
+import ProfilePictureSquare from "../img/ProfilePictureSquare.png"
+import CV from "../doc/CV.pdf"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faFilePdf } from "@fortawesome/free-solid-svg-icons"
 
 import React from "react"
 
@@ -12,10 +16,17 @@ const Public = () => {
       </header>
       <main className="public__main">
         <p>
-          This application is intended as a coding example used for applications
-          as a Full-Stack programmer. If you have any questions, don't hesitate
-          to reach out to me!
+          This app is intended as a coding example used for applications as a
+          Full-Stack programmer. To start using the app, click "User Login" at
+          the footer of the page. If you have any questions, don't hesitate to
+          reach out to me!
         </p>
+        <img
+          src={ProfilePictureSquare}
+          aria-hidden
+          alt="Profile picture of Nicolas Schwandner"
+          className="profile--picture"
+        />
         <address className="public__addr">
           Nicolas Schwandner
           <br />
@@ -31,6 +42,13 @@ const Public = () => {
             nico.schwandner@gmail.com
           </a>
         </address>
+        <p>
+          <a href={CV} without rel="noopener noreferrer" target="_blank">
+            <button className="icon-button--action" title="View CV">
+              <FontAwesomeIcon icon={faFilePdf} /> View CV
+            </button>
+          </a>
+        </p>
       </main>
       <footer>
         <Link to="/login">User Login</Link>

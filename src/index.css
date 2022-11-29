@@ -55,6 +55,11 @@ p.offscreen {
   white-space: nowrap;
 }
 
+.profile--picture {
+  max-width: 300px;
+  margin-top: 1em;
+}
+
 .icon-button {
   width: 2rem;
   height: 2rem;
