@@ -95,6 +95,7 @@ p.offscreen {
   width: fit-content;
   height: 2.5rem;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .icon-button--remove:hover,
@@ -123,6 +124,7 @@ p.offscreen {
   width: fit-content;
   height: 2.5rem;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .icon-button--action:hover,
