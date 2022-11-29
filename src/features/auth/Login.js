@@ -63,6 +63,7 @@ const Login = () => {
       <p className="loading-animation-wrapper">
         <PulseLoader color={"var(--COLOR)"} className="loading-animation" />
         <p>
+          <br />
           This can take some time (1-2 min), when the app starts the first time
           in a while.
         </p>
