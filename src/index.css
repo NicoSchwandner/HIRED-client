@@ -27,6 +27,20 @@ html {
   --STATUS-NOT-STARTED: rgb(151 54 52);
   --TABLE-BGCOLOR: #fffffa;
   --TABLE-COLOR: #3b416d;
+
+  /* --BGCOLOR: #060f31;
+  --BORDER-COLOR: #f00;
+  --COLOR: #f00;
+  --ERROR: rgb(151 54 52);
+  --INACTIVE: lightgray;
+  --LINK-COLOR: #f00;
+  --LINK-HOVER: hsl(233deg 30% 50%);
+  --ISSUE-BGCOLOR: hsla(240, 64%, 27%, 0.65);
+  --STATUS-DONE: #067856;
+  --STATUS-IN-PROGRESS: #f00;
+  --STATUS-NOT-STARTED: rgb(151 54 52);
+  --TABLE-BGCOLOR: #060f31;
+  --TABLE-COLOR: #f00; */
 }
 
 /* || UTILITY CLASSES */
@@ -99,8 +113,8 @@ p.offscreen {
   padding-inline: 1rem;
   width: fit-content;
   height: 2.5rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  /* margin-top: 2rem;
+  margin-bottom: 2rem; */
 }
 
 .icon-button--remove:hover,
@@ -128,8 +142,8 @@ p.offscreen {
   padding-inline: 1rem;
   width: fit-content;
   height: 2.5rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  /* margin-top: 2rem;
+  margin-bottom: 2rem; */
 }
 
 .icon-button--action:hover,
@@ -164,6 +178,7 @@ textarea,
 select {
   font: inherit;
   color: var(--COLOR);
+  background-color: var(--BGCOLOR);
 }
 
 #root {
@@ -465,9 +480,12 @@ tr {
 
 .form__action-buttons {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5em;
   right: 0.5em;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .form__row {

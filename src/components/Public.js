@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import ProfilePictureSquare from "../img/ProfilePictureSquare.png"
 import CV from "../doc/CV.pdf"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFilePdf } from "@fortawesome/free-solid-svg-icons"
+import { faFilePdf, faCodeBranch } from "@fortawesome/free-solid-svg-icons"
 
 import React from "react"
 
@@ -42,13 +42,41 @@ const Public = () => {
             nico.schwandner@gmail.com
           </a>
         </address>
-        <p>
+        <div className="form__action-buttons">
           <a href={CV} without rel="noopener noreferrer" target="_blank">
             <button className="icon-button--action" title="View CV">
               <FontAwesomeIcon icon={faFilePdf} /> View CV
             </button>
           </a>
-        </p>
+          <a
+            href="https://github.com/Schmandi/HIRED-client"
+            without
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <button
+              className="icon-button--action"
+              title="View Client Source Code"
+            >
+              <FontAwesomeIcon icon={faCodeBranch} /> View Client Source Code
+            </button>
+          </a>
+          <a
+            href="https://github.com/Schmandi/HIRED-server"
+            without
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <button
+              className="icon-button--action"
+              title="View Server Source Code"
+            >
+              <FontAwesomeIcon icon={faCodeBranch} /> View Server Source Code
+            </button>
+          </a>
+        </div>
+        {/* https://github.com/Schmandi/HIRED-client */}
+        {/* https://github.com/Schmandi/HIRED-server */}
       </main>
       <footer>
         <Link to="/login">User Login</Link>
