@@ -3,7 +3,7 @@ import Issue from "./Issue"
 import useAuth from "../../hooks/useAuth"
 import PulseLoader from "react-spinners/PulseLoader"
 import useTitle from "../../hooks/useTitle"
-import { ISSUE_STATUS } from "../../config/issue_status"
+import { ISSUE_STATUS_RANKING } from "../../config/issue_status"
 import ErrorMessage from "../../components/ErrorMessage"
 
 const IssuesList = () => {
@@ -53,30 +53,11 @@ const IssuesList = () => {
     }
 
     const sortedAndFilteredIds = filteredIds.slice().sort((a, b) => {
-      if (entities[a].status === entities[b].status)
-        return 0 // keep original order
-      else if (entities[a].status === ISSUE_STATUS.done) {
-        // b is 0 or 1
-        return 1
-      } else if (entities[a].status === ISSUE_STATUS.in_progress) {
-        // b is 0 or 2
-        return -1
-      } else {
-        // a is 0 or other
-        // b is 0, 1 or 2 or other
-        if (entities[b].status === ISSUE_STATUS.done) {
-          return -1
-        } else if (entities[b].status === ISSUE_STATUS.in_progress) {
-          return 1
-        } else {
-          // b is 0 or other
-          return 0
-        }
-      }
+      return (
+        ISSUE_STATUS_RANKING[entities[a].status] -
+        ISSUE_STATUS_RANKING[entities[b].status]
+      )
     })
-    // sortedAndFilteredIds.forEach((id) =>
-    //   console.log(`ID: ${id} Group: ${entities[id].status}`)
-    // )
 
     const tableContent =
       ids?.length &&

@@ -104,8 +104,12 @@ const EditIssueForm = ({ users, issue }) => {
 
   const statusOptions = Object.values(ISSUE_STATUS).map((status) => {
     return (
-      <option key={status} value={status} label={ISSUE_STATUS_NR2STR[status]}>
-        {status}
+      <option
+        key={status.id}
+        value={status.id}
+        label={ISSUE_STATUS_NR2STR[status.id]}
+      >
+        {status.id}
       </option>
     )
   })

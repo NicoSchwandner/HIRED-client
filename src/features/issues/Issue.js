@@ -31,13 +31,13 @@ const Issue = ({ issueId }) => {
 
     let issueStatusClassSuffix
     switch (issue.status) {
-      case ISSUE_STATUS.done:
+      case ISSUE_STATUS.done.id:
         issueStatusClassSuffix = "--done"
         break
-      case ISSUE_STATUS.in_progress:
+      case ISSUE_STATUS.in_progress.id:
         issueStatusClassSuffix = "--in-progress"
         break
-      case ISSUE_STATUS.not_started:
+      case ISSUE_STATUS.not_started.id:
       default:
         issueStatusClassSuffix = "--not-started"
       // code block
