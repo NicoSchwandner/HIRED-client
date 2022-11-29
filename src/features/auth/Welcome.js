@@ -20,17 +20,17 @@ const Welcome = () => {
       <p>
         <Link to="/dash/issues">View issues</Link>
       </p>
-      {isSubmitter && (
+      {(isSubmitter || isAdmin) && (
         <p>
           <Link to="/dash/issues/new">Create new issue</Link>
         </p>
       )}
-      {(isSubmitter || isAdmin) && (
+      {isAdmin && (
         <p>
           <Link to="/dash/users">View user settings</Link>
         </p>
       )}
-      {(isSubmitter || isAdmin) && (
+      {isAdmin && (
         <p>
           <Link to="/dash/users/new">Create new user</Link>
         </p>

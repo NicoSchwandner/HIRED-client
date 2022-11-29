@@ -35,13 +35,7 @@ function App() {
               <Route path="dash" element={<DashLayout />}>
                 <Route index element={<Welcome />} />
 
-                <Route
-                  element={
-                    <RequireAuth
-                      allowedRoles={[ROLES.Admin, ROLES.Submitter]}
-                    />
-                  }
-                >
+                <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
                   <Route path="users">
                     <Route index element={<UsersList />} />
                     <Route path=":id" element={<EditUser />} />
@@ -51,8 +45,16 @@ function App() {
 
                 <Route path="issues">
                   <Route index element={<IssuesList />} />
-                  <Route path=":id" element={<EditIssue />} />
-                  <Route path="new" element={<NewIssue />} />
+                  <Route
+                    element={
+                      <RequireAuth
+                        allowedRoles={[ROLES.Admin, ROLES.Submitter]}
+                      />
+                    }
+                  >
+                    <Route path=":id" element={<EditIssue />} />
+                    <Route path="new" element={<NewIssue />} />
+                  </Route>
                 </Route>
               </Route>
             </Route>

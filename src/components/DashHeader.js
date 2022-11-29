@@ -63,20 +63,22 @@ const DashHeader = () => {
   }
 
   let newIssueButton = null
-  if (ISSUES_REGEX.test(pathname)) {
-    newIssueButton = (
-      <button
-        className="icon-button"
-        title="New Issue"
-        onClick={onNewIssueClicked}
-      >
-        <FontAwesomeIcon icon={faFileCirclePlus} />
-      </button>
-    )
+  if (isAdmin || isSubmitter) {
+    if (ISSUES_REGEX.test(pathname)) {
+      newIssueButton = (
+        <button
+          className="icon-button"
+          title="New Issue"
+          onClick={onNewIssueClicked}
+        >
+          <FontAwesomeIcon icon={faFileCirclePlus} />
+        </button>
+      )
+    }
   }
 
   let userButton = null
-  if (isSubmitter || isAdmin) {
+  if (isAdmin) {
     if (!USERS_REGEX.test(pathname) && pathname.includes("/dash")) {
       userButton = (
         <button className="icon-button" title="Users" onClick={onUsersClicked}>
