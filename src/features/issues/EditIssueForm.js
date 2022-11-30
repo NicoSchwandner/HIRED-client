@@ -88,7 +88,7 @@ const EditIssueForm = ({ users, issue }) => {
 
   const userOptions = users.map((user) => {
     return (
-      <option key={user.id} value={user.id} label={user.username}>
+      <option value={user.id} label={user.username}>
         {user.username}
       </option>
     )
@@ -96,20 +96,16 @@ const EditIssueForm = ({ users, issue }) => {
 
   const typeOptions = Object.values(ISSUE_TYPE).map((type) => {
     return (
-      <option key={type} value={type} label={ISSUE_TYPE_NR2STR[type]}>
-        {type}
+      <option value={type} label={ISSUE_TYPE_NR2STR[type]}>
+        {ISSUE_TYPE_NR2STR[type]}
       </option>
     )
   })
 
   const statusOptions = Object.values(ISSUE_STATUS).map((status) => {
     return (
-      <option
-        key={status.id}
-        value={status.id}
-        label={ISSUE_STATUS_NR2STR[status.id]}
-      >
-        {status.id}
+      <option value={status.id} label={ISSUE_STATUS_NR2STR[status.id]}>
+        {ISSUE_STATUS_NR2STR[status.id]}
       </option>
     )
   })
