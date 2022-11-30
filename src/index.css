@@ -65,6 +65,10 @@ p.offscreen {
   text-decoration: underline;
 }
 
+.loginmsg {
+  margin: 32px;
+}
+
 .nowrap {
   white-space: nowrap;
 }
