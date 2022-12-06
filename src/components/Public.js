@@ -18,8 +18,8 @@ const Public = () => {
         <p>
           This app is intended as a coding example used for applications as a
           Full-Stack programmer. To start using the app, click "User Login" at
-          the footer of the page. If you have any questions, don't hesitate to
-          reach out to me!
+          the footer of the page. If you have any questions, or need the login
+          credentials, don't hesitate to reach out to me!
         </p>
         <img
           src={ProfilePictureSquare}
