@@ -24,7 +24,7 @@ export const issuesApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => {
         if (result?.ids) {
           return [
-            { tpe: "Issue", id: "LIST" },
+            { type: "Issue", id: "LIST" },
             ...result.ids.map((id) => ({ type: "Issue", id })),
           ]
         } else return [{ type: "Issue", id: "LIST" }]
